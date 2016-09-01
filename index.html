@@ -6,25 +6,34 @@
     <script src="./assets/toast.js"></script>
 </head>
 <body>
-<div class="container">
-    <div class="row">
-        <div class="column">
-            <h1>Performance JS</h1>
+<div class="o-panel-container">
+    <ul class="c-nav c-nav--inline c-nav--top">
+        <li class="c-nav__item">Performance JS</li>
+    </ul>
+    <div class="o-panel o-panel--nav-top">
+        <div class="o-grid o-grid--no-gutter">
+            <div class="o-grid__cell o-grid__cell--width-40">
+                40%
+            </div>
+            <div class="o-grid__cell o-grid__cell--width-60">
+                60%
+            </div>
         </div>
     </div>
-    <div class="row">
-        <!-- .column-33 or .column-34 both work for 1/3 column width -->
-        <div class="column column-40">40%</div>
-        <!-- .column-66 or .column-67 both work for 2/3 column width -->
-        <div class="column column-60">60%</div>
+</div>
+<div class="o-grid o-grid--no-gutter o-grid--wrap">
+
+    <div class="o-grid__cell o-grid__cell--width-100">
+
     </div>
+
 </div>
 
 <script>
-    toast('assets/milligram.css', 'assets/director.js', 'assets/balalaika.js', 'assets/doT.js',
-        function() {
-            console.log('loaded');
-        }
+    toast('assets/blaze.min.css', 'assets/director.js', 'assets/balalaika.js', 'assets/doT.js',
+            function () {
+                console.log('loaded');
+            }
     )
 </script>
 </body>
