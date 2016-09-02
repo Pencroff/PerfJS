@@ -1,0 +1,5 @@
+
+.c-nav__item--no-hover:not(:disabled):hover {
+	color: inherit;
+	background-color: inherit;
+}
