@@ -21,12 +21,20 @@
                         </div>
                     </span>
             </nav>
-            <div class="o-panel o-panel--nav-top">
+            <div class="c-test-list o-panel o-panel--nav-top">
                 <div class="c-card">
                     <div class="c-card__content c-card__content--divider">Test name</div>
                     <div class="c-card__content">
                         <p class="c-paragraph">Lorem ipsum dolor sit amet, feugiat corpora ex eam. Inciderint eloquentiam sea et.</p>
                         <p class="c-paragraph">Lorem ipsum dolor sit amet, feugiat corpora ex eam. Inciderint eloquentiam sea et.</p>
+                    </div>
+                    <div class="c-card__content c-card__content--divider c-tags">
+                        <span class="c-tags__container">
+                            <button type="button" class="c-button c-button--primary c-tag">
+                                array
+                                <span class="c-tag__close">&#9679;</span>
+                            </button>
+                        </span>
                     </div>
                 </div>
                 <div class="c-card">
@@ -118,21 +126,43 @@
     </div>
     <div class="o-grid__cell--width-70 o-panel-container">
         <div class="o-panel">
-            <div class="c-card">
-                <div class="c-card__content c-card__content--divider">Test name</div>
-                <div class="c-card__content">
-                    <p class="c-paragraph">Lorem ipsum dolor sit amet, feugiat corpora ex eam. Inciderint eloquentiam sea et.</p>
-                    <p class="c-paragraph">Lorem ipsum dolor sit amet, feugiat corpora ex eam. Inciderint eloquentiam sea et.</p>
-                </div>
-            </div>
+            60%
         </div>
     </div>
 </div>
 <script>
     toast('assets/style/blaze.min.css', 'assets/style/app.css',
           'assets/js/director.js', 'assets/js/balalaika.js', 'assets/js/doT.js',
+          'assets/js/lodash.min.js', 'assets/js/platform.js', 'assets/js/benchmark.js',
+          'data.js',
             function () {
-                console.log('loaded');
+
+                var list = window.testList;
+                var selected = list[0];
+                toast(selected.url, function () {
+                    var test = window.test;
+                    var suite = new Benchmark.Suite;
+//                // add tests
+//                suite.add('RegExp#test', function() {
+//                    /o/.test('Hello World!');
+//                })
+//                .add('String#indexOf', function() {
+//                    'Hello World!'.indexOf('o') > -1;
+//                })
+                    test.run(suite);
+                    suite
+                    // add listeners
+                    .on('cycle', function(event) {
+                        console.log(String(event.target));
+                        console.dir(event);
+                    })
+                    .on('complete', function() {
+                        console.log('Fastest is ' + this.filter('fastest').map('name'));
+                    })
+                    // run async
+                    .run({ 'async': true });
+                    console.log(suite);
+                })
             }
     )
 </script>
