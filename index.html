@@ -132,8 +132,8 @@
 </div>
 <script>
     toast('assets/style/blaze.min.css', 'assets/style/app.css',
-          'assets/js/director.js', 'assets/js/balalaika.js', 'assets/js/doT.js',
           'assets/js/lodash.min.js', 'assets/js/platform.js', 'assets/js/benchmark.js',
+          'assets/js/director.js', 'assets/js/balalaika.js', 'assets/js/doT.js',
           'data.js',
             function () {
 
@@ -142,26 +142,17 @@
                 toast(selected.url, function () {
                     var test = window.test;
                     var suite = new Benchmark.Suite;
-//                // add tests
-//                suite.add('RegExp#test', function() {
-//                    /o/.test('Hello World!');
-//                })
-//                .add('String#indexOf', function() {
-//                    'Hello World!'.indexOf('o') > -1;
-//                })
-                    test.run(suite);
+                    test.fill(suite);
                     suite
                     // add listeners
                     .on('cycle', function(event) {
                         console.log(String(event.target));
-                        console.dir(event);
                     })
                     .on('complete', function() {
                         console.log('Fastest is ' + this.filter('fastest').map('name'));
                     })
                     // run async
                     .run({ 'async': true });
-                    console.log(suite);
                 })
             }
     )

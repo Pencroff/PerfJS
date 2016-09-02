@@ -8,7 +8,7 @@ window.test = {
     description: 'Performance test for array concatenation',
     tags: ['array', 'concatenation'],
     url: 'tests/array-concatenation.js',
-    run: function (suite) {
+    fill: function (suite) {
         var result;
         var arr;
         suite.add('by join', function () {
@@ -29,7 +29,7 @@ window.test = {
         });
 
         function getArray() {
-            var len = 10;
+            var len = 250;
             var arr = [];
             for (var i = 0; i < len; i += 1) {
                 arr[i] = Math.random().toString(36).substr(2, 1);
