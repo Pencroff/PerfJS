@@ -74,7 +74,24 @@
                     '<div class="c-tab-heading c-tab-heading--active">Test</div>',
                     '<div class="c-tab-heading">Source</div>',
                 '</div>',
-                '<div class="c-tabs__tab c-tabs__tab--active">This is Test tab</div>',
+                '<div class="c-tabs__tab c-tabs__tab--active">',
+                    '<button type="button" class="c-button c-button--secondary">Run test</button>',
+                    '<table class="c-table c-table--striped">',
+                        '<thead class="c-table__head">',
+                            '<tr class="c-table__row c-table__row--heading">',
+                                '<th class="c-table__cell c-table__cell--case-header" colspan="2">Test</th>',
+                                '<th class="c-table__cell c-table__cell--case-result">Result (ops/sec)</th>',
+                            '</tr>',
+                        '</thead>',
+                        '<tbody class="c-table__body">',
+                            '<tr class="c-table__row">',
+                                '<td class="c-table__cell c-table__cell--case-name">Case name</td>',
+                                '<td class="c-table__cell c-table__cell--case-source">Case source</td>',
+                                '<td class="c-table__cell c-table__cell--case-result">256</td>',
+                            '</tr>',
+                        '</tbody>',
+                    '</table>',
+                '</div>',
                 '<div class="c-tabs__tab">This is Source tab</div>',
             '</div>',
         '</div>'
@@ -88,11 +105,17 @@
     detailContainer.innerHTML = detailTemplateFn(selected);
 
     $('.c-tab-heading').on('click', function (e) {
-        var el = e.target;
-        // var sibling = el.nextSibling || el.previousSibling;
-        $('.c-tab-heading').removeClass('c-tab-heading--active');
-        $(el).addClass('c-tab-heading--active');
-        console.dir(e.target);
+        var targetEl = e.target;
+        var nextIndex = targetEl.nextSibling ? 0 : 1;
+        var contentPanels = $('.c-tabs__tab').removeClass('c-tabs__tab--active');
+        $('.c-tab-heading')
+            .removeClass('c-tab-heading--active')
+            .forEach(function (el, index) {
+                if(index === nextIndex) {
+                    $(el).addClass('c-tab-heading--active');
+                    $(contentPanels[index]).addClass('c-tabs__tab--active');
+                }
+            });
     });
 // Test example
 //                var list = window.testList;
