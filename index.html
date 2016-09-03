@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>PerformanceJS</title>
     <link rel="stylesheet" href="assets/style/blaze.min.css">
+    <link rel="stylesheet" href="assets/style/blaze.animations.min.css">
     <link rel="stylesheet" href="assets/style/app.css">
     <link rel="shortcut icon" type="image/png" href="./assets/img/stopwatch.png"/>
 </head>
@@ -27,7 +28,7 @@
         </div>
     </div>
     <div class="o-grid__cell--width-70 o-panel-container">
-        <div class="o-panel">
+        <div class="c-test-detail o-panel">
             60%
         </div>
     </div>
@@ -37,14 +38,16 @@
 <script src="assets/js/platform.js"></script>
 <script src="assets/js/benchmark.js"></script>
 <script src="assets/js/director.js"></script>
-<script src="assets/js/balalaika.js"></script>
+<script src="//cdn.jsdelivr.net/domtastic/0.11/domtastic.min.js"></script>
 <script src="assets/js/doT.js"></script>
 <script src="assets/js/toast.js"></script>
 <script src="data.js"></script>
 <script>
-    var testListContainer = $('.c-test-list')[0];
     var list = window.testList;
-    var testCardTemplate = [
+    var selected = list[0];
+
+    var testListContainer = $('.c-test-list')[0];
+    var listItemTemplate = [
         '<div class="c-card c-card--test-desc">',
             '<div class="c-card__content c-card__content--divider">{{=it.name}}</div>',
             '<div class="c-card__content">',
@@ -60,14 +63,37 @@
             '</div>',
         '</div>'
     ].join('');
-    var testCardTemplateFn = doT.template(testCardTemplate);
+    var listItemTemplateFn = doT.template(listItemTemplate);
+
+    var detailContainer = $('.c-test-detail')[0];
+    var detailTemplate = [
+        '<div class="c-test-details">',
+            '<h2>{{=it.name}}</h2>',
+            '<div class="c-tabs c-tabs--success a-tabs a-tabs--slow">',
+                '<div class="c-tabs__headings">',
+                    '<div class="c-tab-heading c-tab-heading--active">Test</div>',
+                    '<div class="c-tab-heading">Source</div>',
+                '</div>',
+                '<div class="c-tabs__tab c-tabs__tab--active">This is Test tab</div>',
+                '<div class="c-tabs__tab">This is Source tab</div>',
+            '</div>',
+        '</div>'
+    ].join('');
+    var detailTemplateFn = doT.template(detailTemplate);
 
     // testListContainer.innerHTML = '';
     testListContainer.innerHTML = list.map(function (item) {
-        return testCardTemplateFn(item);
+        return listItemTemplateFn(item);
     }).join('');
+    detailContainer.innerHTML = detailTemplateFn(selected);
 
-
+    $('.c-tab-heading').on('click', function (e) {
+        var el = e.target;
+        // var sibling = el.nextSibling || el.previousSibling;
+        $('.c-tab-heading').removeClass('c-tab-heading--active');
+        $(el).addClass('c-tab-heading--active');
+        console.dir(e.target);
+    });
 // Test example
 //                var list = window.testList;
 //                var selected = list[0];
