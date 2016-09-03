@@ -23,13 +23,15 @@ window.test = {
                 result += arr[i];
             }
         });
-        suite.on('start cycle complete', function () {
+        suite.on('start cycle', function () {
             arr = getArray();
+        });
+        suite.on('cycle', function () {
             console.log('cycle', result);
         });
 
         function getArray() {
-            var len = 250;
+            var len = 1000;
             var arr = [];
             for (var i = 0; i < len; i += 1) {
                 arr[i] = Math.random().toString(36).substr(2, 1);

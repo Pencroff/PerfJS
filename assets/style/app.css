@@ -3,3 +3,11 @@
 	color: inherit;
 	background-color: inherit;
 }
+
+.c-card--test-desc {
+	background-color: #f9f9f9
+}
+
+.c-test-list {
+	top: 68px;
+}
