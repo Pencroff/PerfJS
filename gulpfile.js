@@ -47,8 +47,7 @@ makeTask({
 makeTask({
     name: 'benchmark',
     files: ['assets/js/benchmark.js', 'assets/js/platform.js'],
-    destination: destination,
-    uglify: false
+    destination: destination
 });
 
 gulp.task('engine', ['app', 'vendor', 'benchmark', 'templates']);
