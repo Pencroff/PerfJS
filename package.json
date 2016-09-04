@@ -5,7 +5,7 @@
   "main": "data.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dotjs": "./bin/dot-packer -s src -d assets"
+    "dotjs": "node_modules/.bin/dot-packer -d src/views/ -o docs/templates.min.js"
   },
   "repository": {
     "type": "git",
