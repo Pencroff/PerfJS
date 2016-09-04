@@ -1,5 +1,5 @@
-<div class="c-card c-card--test-desc">
-    <div class="c-card__content c-card__content--divider">{{=it.name}}</div>
+<div class="c-card c-card--test-desc {{? it.active }} c-card--primary {{?}}">
+    <div class="c-card__content c-card__content--divider" data-id="{{=it.id}}">{{=it.name}}</div>
     <div class="c-card__content">
         <p class="c-paragraph">{{=it.description}}</p>
         <br/>

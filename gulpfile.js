@@ -81,7 +81,7 @@ makeTask({
     destination: destination
 });
 
-gulp.task('engine', ['app', 'vendor', 'benchmark', 'templates']);
+gulp.task('engine', ['app', 'vendor', 'benchmark', 'templates', 'generate-data-file']);
 
 gulp.task('engine-watch', ['app-watch', 'templates-watch']);
 
