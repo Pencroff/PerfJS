@@ -4,8 +4,7 @@
   "description": "Compare performance different approaches in your browser",
   "main": "data.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dotjs": "node_modules/.bin/dot-packer -d src/views/ -o docs/templates.min.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -18,6 +17,12 @@
   },
   "homepage": "https://github.com/Pencroff/PerformanceJS#readme",
   "devDependencies": {
-    "dot-packer": "0.0.5"
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-dotify": "^0.1.2",
+    "gulp-header": "^1.8.8",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^2.0.0",
+    "gulp-watch": "^4.3.9"
   }
 }
