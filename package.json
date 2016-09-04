@@ -1,0 +1,23 @@
+{
+  "name": "performancejs",
+  "version": "1.0.0",
+  "description": "Compare performance different approaches in your browser",
+  "main": "data.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dotjs": "./bin/dot-packer -s src -d assets"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pencroff/PerformanceJS.git"
+  },
+  "author": "Sergey Daniloff @Pencroff",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Pencroff/PerformanceJS/issues"
+  },
+  "homepage": "https://github.com/Pencroff/PerformanceJS#readme",
+  "devDependencies": {
+    "dot-packer": "0.0.5"
+  }
+}
