@@ -12,10 +12,8 @@
         var routes = {
             '/': [caseList.onRoot, caseDetails.onRoot],
             '/:id': [caseList.byId, caseDetails.byId],
-            '/search/:query': [caseList.search, caseDetails.search],
-            '/search/:query/:id': [caseList.search, caseDetails.search],
-            '/tag/:tag': [caseList.byTag, caseDetails.byTag],
-            '/tag/:tag/:id': [caseList.byTag, caseDetails.byTag],
+            '/search/:query': [caseList.search],
+            '/tag/:tag': [caseList.byTag],
         };
 
         var router = Router(routes);

@@ -12,10 +12,8 @@
         var routes = {
             '/': [caseList.onRoot, caseDetails.onRoot],
             '/:id': [caseList.byId, caseDetails.byId],
-            '/search/:query': [caseList.search, caseDetails.search],
-            '/search/:query/:id': [caseList.search, caseDetails.search],
-            '/tag/:tag': [caseList.byTag, caseDetails.byTag],
-            '/tag/:tag/:id': [caseList.byTag, caseDetails.byTag],
+            '/search/:query': [caseList.search],
+            '/tag/:tag': [caseList.byTag],
         };
 
         var router = Router(routes);
@@ -31,20 +29,83 @@
     module.render = renderCaseDetails;
     module.onRoot = onRootRoute;
     module.byId = byIdRoute;
-    module.search = searchRoute;
-    module.byTag = byTagRoute;
 
     function onRootRoute() {
         module.render('Please select test in list beside')
     }
     function byIdRoute(id) {
         console.log('id - caseDetails ::', id);
+        var selectedCase = getCaseById(id, root.data);
+        $script(selectedCase.url + '?v=' + Date.now(), function () {
+            var test = window.test;
+            var suite = new Benchmark.Suite;
+            var testFillResult = test.fill(suite);
+            if (root.utils.isPromise(testFillResult)) {
+                testFillResult.then(finishSuiteSetup);
+            } else {
+                finishSuiteSetup(suite);
+            }
+            clearHeadScripts(selectedCase.url)
+        })
     }
-    function searchRoute(query) {
-        console.log('query - caseDetails ::', query);
+
+    function finishSuiteSetup(suite) {
+        var test = window.test;
+        var viewData = transformSuiteToViewData(suite, test);
+        console.log(suite);
+        console.log(viewData);
+        suite
+        // add listeners
+            .on('cycle', function(event) {
+                console.log(String(event.target));
+            })
+            .on('complete', function() {
+                console.log('Fastest is ' + this.filter('fastest').map('name'));
+            });
+        // run async
+        // .run({ 'async': true });
+        module.currentSuite = suite;
+        module.render(viewData);
     }
-    function byTagRoute(tag) {
-        console.log('tag - caseDetails ::', tag);
+
+    function transformSuiteToViewData(suite, test) {
+        console.log(platform);
+        console.log(test);
+        var result = {
+            name: test.name,
+            platform: platform.description
+        };
+        result.cases = _.map(suite, function (benchmark) {
+            var viewData = {
+                name: benchmark.name,
+                source: getFunctionSource(benchmark.fn.toString())
+            };
+            return viewData;
+        });
+        return result;
+    }
+
+    function getFunctionSource(str) {
+        var firstIndex = str.indexOf('{');
+        var lastIndex = str.lastIndexOf('}');
+        var result = str.substring(firstIndex + 1, lastIndex);
+        return result;
+    }
+
+    function getCaseById(id, list) {
+        var len = list.length;
+        var index = 0;
+        var result = null;
+        var currentCase;
+        while (len > 0 && result === null) {
+            currentCase = list[index];
+            if (currentCase.id === id) {
+                result = currentCase;
+            }
+            index += 1;
+            len -= 1;
+        }
+        return result;
     }
 
     function renderCaseDetails(item) {
@@ -72,6 +133,15 @@
             container.innerHTML = emptyTemplateFn({ text: item || '' });
         }
     }
+    
+    function clearHeadScripts(currentUrl) {
+        $('head > script').forEach(function (script) {
+            var el = $(script);
+            if (el.attr('src').indexOf(currentUrl) === -1) {
+                el.remove();
+            }
+        });
+    }
 })(window.PerformanceJs);
 /**
  * Created by Pencroff on 04-Sep-16.
@@ -87,33 +157,37 @@
     module.byTag = byTagRoute;
 
     function onRootRoute() {
-        var data = root.data;
-        module.render(data);
+        module.filteredData = root.data.slice(0);
+        module.render(module.filteredData);
     }
     function byIdRoute(id) {
         if (id === 'undefined' || id === 'null') window.location.hash = '/';
-        var data = root.data.map(function (item) {
+        if (!module.filteredData) {
+            module.filteredData = root.data.slice(0);
+        }
+        module.selectedCase = id;
+        var data = module.filteredData.map(function (item) {
             item.active = item.id === id;
             return item;
         });
         module.render(data);
     }
-    function searchRoute(query, id) {
+    function searchRoute(query) {
         if (query === 'undefined' || query === 'null') window.location.hash = '/';
-        var data = _.filter(root.data, function(item) {
-            item.active = item.id === id;
+        module.filteredData = _.filter(root.data, function(item) {
+            item.active = item.id === module.selectedCase;
             return ((item.name && item.name.indexOf(query) > -1)
                 || (item.description && item.description.indexOf(query) > -1));
         });
-        module.render(data);
+        module.render(module.filteredData);
     }
-    function byTagRoute(tag, id) {
+    function byTagRoute(tag) {
         if (tag === 'undefined' || tag === 'null') window.location.hash = '/';
-        var data = _.filter(root.data, function(item) {
-            item.active = item.id === id;
+        module.filteredData = _.filter(root.data, function(item) {
+            item.active = item.id === module.selectedCase;
             return _.includes(item.tags, tag);
         });
-        module.render(data);
+        module.render(module.filteredData);
     }
     function renderCaseList(list) {
         var caseListContainer = $('.c-test-list')[0];
@@ -128,13 +202,7 @@
     function onCaseSelect(e) {
         var el = e.target;
         var id = $(el).attr('data-id');
-        var parts = window.location.hash.split('/').splice(1, 2);
-        if (parts[0] === 'tag' || parts[0] === 'search') {
-            parts.push(id);
-            window.location.hash = '/'+ parts.join('/');
-        } else  {
-            window.location.hash = '/' + id;
-        }
+        window.location.hash = '/' + id;
     }
     function onTagSelect(e) {
         var el = e.target;
@@ -155,5 +223,14 @@
             }
             return ({}).toString.call(obj).match(/\s([a-z|A-Z]+)/)[1].toLowerCase();
         };
-    })(this)
+    })(this);
+    module.isPromise = function (v) {
+        var result = false;
+        var vType = module.toType(v);
+        if ((vType === 'object' || vType === 'function')
+            && module.toType(v.then) === 'function') {
+            result = true;
+        }
+        return result;
+    }
 })(window.PerformanceJs);

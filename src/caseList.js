@@ -12,33 +12,37 @@
     module.byTag = byTagRoute;
 
     function onRootRoute() {
-        var data = root.data;
-        module.render(data);
+        module.filteredData = root.data.slice(0);
+        module.render(module.filteredData);
     }
     function byIdRoute(id) {
         if (id === 'undefined' || id === 'null') window.location.hash = '/';
-        var data = root.data.map(function (item) {
+        if (!module.filteredData) {
+            module.filteredData = root.data.slice(0);
+        }
+        module.selectedCase = id;
+        var data = module.filteredData.map(function (item) {
             item.active = item.id === id;
             return item;
         });
         module.render(data);
     }
-    function searchRoute(query, id) {
+    function searchRoute(query) {
         if (query === 'undefined' || query === 'null') window.location.hash = '/';
-        var data = _.filter(root.data, function(item) {
-            item.active = item.id === id;
+        module.filteredData = _.filter(root.data, function(item) {
+            item.active = item.id === module.selectedCase;
             return ((item.name && item.name.indexOf(query) > -1)
                 || (item.description && item.description.indexOf(query) > -1));
         });
-        module.render(data);
+        module.render(module.filteredData);
     }
-    function byTagRoute(tag, id) {
+    function byTagRoute(tag) {
         if (tag === 'undefined' || tag === 'null') window.location.hash = '/';
-        var data = _.filter(root.data, function(item) {
-            item.active = item.id === id;
+        module.filteredData = _.filter(root.data, function(item) {
+            item.active = item.id === module.selectedCase;
             return _.includes(item.tags, tag);
         });
-        module.render(data);
+        module.render(module.filteredData);
     }
     function renderCaseList(list) {
         var caseListContainer = $('.c-test-list')[0];
@@ -53,13 +57,7 @@
     function onCaseSelect(e) {
         var el = e.target;
         var id = $(el).attr('data-id');
-        var parts = window.location.hash.split('/').splice(1, 2);
-        if (parts[0] === 'tag' || parts[0] === 'search') {
-            parts.push(id);
-            window.location.hash = '/'+ parts.join('/');
-        } else  {
-            window.location.hash = '/' + id;
-        }
+        window.location.hash = '/' + id;
     }
     function onTagSelect(e) {
         var el = e.target;

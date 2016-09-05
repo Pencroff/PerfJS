@@ -11,5 +11,14 @@
             }
             return ({}).toString.call(obj).match(/\s([a-z|A-Z]+)/)[1].toLowerCase();
         };
-    })(this)
+    })(this);
+    module.isPromise = function (v) {
+        var result = false;
+        var vType = module.toType(v);
+        if ((vType === 'object' || vType === 'function')
+            && module.toType(v.then) === 'function') {
+            result = true;
+        }
+        return result;
+    }
 })(window.PerformanceJs);
