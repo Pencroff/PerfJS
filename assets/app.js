@@ -71,7 +71,7 @@
         var result = {
             name: test.name,
             platform: platform.description,
-            source: getFunctionSource(test.fill.toString())
+            source: test.fill.toString()
         };
         result.cases = _.map(suite, function (benchmark) {
             var viewData = {
@@ -131,7 +131,6 @@
             container.innerHTML = emptyTemplateFn({ text: item || '' });
         }
         Prism.highlightAll(true);
-        console.dir(Prism);
     }
 })(window.PerformanceJs);
 /**
