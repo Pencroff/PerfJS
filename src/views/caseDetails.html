@@ -20,7 +20,7 @@
                     <tr class="c-table__row">
                         <td class="c-table__cell c-table__cell--case-name">{{=testCase.name}}</td>
                         <td class="c-table__cell c-table__cell--case-source">
-                            <pre><code class="language-javascript">
+                            <pre class="c-table__cell--case-source-code"><code class="language-javascript">
                                 {{=testCase.source}}
                             </code></pre>
                         </td>
@@ -30,6 +30,10 @@
                 </tbody>
             </table>
         </div>
-        <div class="c-tabs__tab">This is Source tab</div>
+        <div class="c-tabs__tab">
+            <pre><code class="language-javascript">
+                {{=it.source}}
+            </code></pre>
+        </div>
     </div>
 </div>

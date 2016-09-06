@@ -21,11 +21,15 @@
 }
 
 .c-table__cell--case-name {
-	flex: 3;
+	flex: 2;
 }
 
 .c-table__cell--case-source {
-	flex: 5;
+	flex: 6;
+}
+
+.c-table__cell--case-source-code {
+	width: 100%;
 }
 
 .c-table__cell--case-result, .c-table__row--heading .c-table__cell--case-result {

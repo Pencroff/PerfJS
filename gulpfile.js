@@ -70,8 +70,8 @@ makeTask({
 
 makeTask({
     name: 'vendor',
-    files: ['assets/js/lodash.min.js', 'assets/js/bluebird.min.js', 'assets/js/director.min.js',
-        'assets/js/domtastic.min.js', 'assets/js/prism.js'],
+    files: ['assets/js/lodash.min.js', 'assets/js/bluebird.min.js',
+        'assets/js/domtastic.min.js', 'assets/js/director.min.js'],
     destination: destination,
 });
 

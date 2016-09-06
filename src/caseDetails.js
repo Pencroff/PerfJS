@@ -4,15 +4,15 @@
 (function (root) {
     root.caseDetails = root.caseDetails || {};
     var module = root.caseDetails;
-    module.render = renderCaseDetails;
     module.onRoot = onRootRoute;
     module.byId = byIdRoute;
 
     function onRootRoute() {
-        module.render('Please select test in list beside')
+        renderCaseDetails('Please select test in list beside')
     }
+
     function byIdRoute(id) {
-        console.log('id - caseDetails ::', id);
+        $('head > script').remove();
         var selectedCase = getCaseById(id, root.data);
         $script(selectedCase.url + '?v=' + Date.now(), function () {
             var test = window.test;
@@ -23,7 +23,6 @@
             } else {
                 finishSuiteSetup(suite);
             }
-            clearHeadScripts(selectedCase.url)
         })
     }
 
@@ -43,15 +42,14 @@
         // run async
         // .run({ 'async': true });
         module.currentSuite = suite;
-        module.render(viewData);
+        renderCaseDetails(viewData);
     }
 
     function transformSuiteToViewData(suite, test) {
-        console.log(platform);
-        console.log(test);
         var result = {
             name: test.name,
-            platform: platform.description
+            platform: platform.description,
+            source: getFunctionSource(test.fill.toString())
         };
         result.cases = _.map(suite, function (benchmark) {
             var viewData = {
@@ -110,14 +108,7 @@
         } else {
             container.innerHTML = emptyTemplateFn({ text: item || '' });
         }
-    }
-    
-    function clearHeadScripts(currentUrl) {
-        $('head > script').forEach(function (script) {
-            var el = $(script);
-            if (el.attr('src').indexOf(currentUrl) === -1) {
-                el.remove();
-            }
-        });
+        Prism.highlightAll(true);
+        console.dir(Prism);
     }
 })(window.PerformanceJs);
