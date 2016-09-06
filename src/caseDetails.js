@@ -49,12 +49,12 @@
         var result = {
             name: test.name,
             platform: platform.description,
-            source: test.fill.toString()
+            source: Prism.highlight(test.fill.toString(), Prism.languages.javascript)
         };
         result.cases = _.map(suite, function (benchmark) {
             var viewData = {
                 name: benchmark.name,
-                source: getFunctionSource(benchmark.fn.toString())
+                source: Prism.highlight(getFunctionSource(benchmark.fn.toString()), Prism.languages.javascript)
             };
             return viewData;
         });
@@ -108,6 +108,6 @@
         } else {
             container.innerHTML = emptyTemplateFn({ text: item || '' });
         }
-        Prism.highlightAll(true);
+        //Prism.highlightAll(container.innerHTML, );
     }
 })(window.PerformanceJs);
