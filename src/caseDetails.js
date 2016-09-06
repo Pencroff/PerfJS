@@ -49,12 +49,12 @@
         var result = {
             name: test.name,
             platform: platform.description,
-            source: Prism.highlight(test.fill.toString(), Prism.languages.javascript)
+            source: test.fill.toString()
         };
         result.cases = _.map(suite, function (benchmark) {
             var viewData = {
                 name: benchmark.name,
-                source: Prism.highlight(getFunctionSource(benchmark.fn.toString()), Prism.languages.javascript)
+                source: getFunctionSource(benchmark.fn.toString())
             };
             return viewData;
         });
@@ -91,7 +91,18 @@
         var emptyTemplateFn = root.JST['caseDetailsEmpty'];
         if (utils.toType(item) === 'object') {
             $('.c-tab-heading', container).off('click');
-            container.innerHTML = templateFn(item);
+            $('.c-button--run-test', container).off('click');
+
+            var content = $(templateFn(item));
+            $('code[class*="language-"]', content)
+                .forEach(function(item) {
+                    Prism.highlightElement(item);
+                });
+            container.innerHTML = content.html();
+
+            $('.c-button--run-test', container).on('click', function (e) {
+                module.currentSuite.run({ 'async': true });
+            });
             $('.c-tab-heading', container).on('click', function (e) {
                 var targetEl = e.target;
                 var nextIndex = targetEl.previousElementSibling ? 1 : 0;
@@ -108,6 +119,5 @@
         } else {
             container.innerHTML = emptyTemplateFn({ text: item || '' });
         }
-        //Prism.highlightAll(container.innerHTML, );
     }
 })(window.PerformanceJs);
