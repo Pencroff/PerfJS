@@ -57,9 +57,23 @@
         // add listeners
             .on('cycle', function(event) {
                 console.log(String(event.target));
+                //console.log(suite, suite.indexOf(event.target), event);
+                $('.c-table__cell--case-result[data-id="' + event.target.id + '"]').text(event.target.toString())
             })
             .on('complete', function() {
                 console.log('Fastest is ' + this.filter('fastest').map('name'));
+                var fastest = this.filter('fastest').map(function (item) {
+                    return $('.c-table__cell--case-result[data-id="' + item.id + '"]')
+                });
+                var slowest = this.filter('slowest').map(function (item) {
+                    return $('.c-table__cell--case-result[data-id="' + item.id + '"]')
+                });
+                fastest.forEach(function (el) {
+                    el.addClass('c-table__cell--case-result-fastest');
+                });
+                slowest.forEach(function (el) {
+                    el.addClass('c-table__cell--case-result-slowest');
+                })
             });
         // run async
         // .run({ 'async': true });
@@ -75,6 +89,7 @@
         };
         result.cases = _.map(suite, function (benchmark) {
             var viewData = {
+                id: benchmark.id,
                 name: benchmark.name,
                 source: getFunctionSource(benchmark.fn.toString())
             };

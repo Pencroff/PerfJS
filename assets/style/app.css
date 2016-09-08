@@ -35,3 +35,11 @@
 .c-table__cell--case-result, .c-table__row--heading .c-table__cell--case-result {
 	flex: 2;
 }
+
+.c-table__cell--case-result-fastest {
+	background-color: #86c989;
+}
+
+.c-table__cell--case-result-slowest {
+	background-color: lightpink;
+}
