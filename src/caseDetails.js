@@ -29,32 +29,6 @@
     function finishSuiteSetup(suite) {
         var test = window.test;
         var viewData = transformSuiteToViewData(suite, test);
-        console.log(suite);
-        console.log(viewData);
-        suite
-        // add listeners
-            .on('cycle', function(event) {
-                console.log(String(event.target));
-                //console.log(suite, suite.indexOf(event.target), event);
-                $('.c-table__cell--case-result[data-id="' + event.target.id + '"]').text(event.target.toString())
-            })
-            .on('complete', function() {
-                console.log('Fastest is ' + this.filter('fastest').map('name'));
-                var fastest = this.filter('fastest').map(function (item) {
-                    return $('.c-table__cell--case-result[data-id="' + item.id + '"]')
-                });
-                var slowest = this.filter('slowest').map(function (item) {
-                    return $('.c-table__cell--case-result[data-id="' + item.id + '"]')
-                });
-                fastest.forEach(function (el) {
-                    el.addClass('c-table__cell--case-result-fastest');
-                });
-                slowest.forEach(function (el) {
-                    el.addClass('c-table__cell--case-result-slowest');
-                })
-            });
-        // run async
-        // .run({ 'async': true });
         module.currentSuite = suite;
         renderCaseDetails(viewData);
     }
@@ -116,7 +90,42 @@
             container.innerHTML = content.html();
 
             $('.c-button--run-test', container).on('click', function (e) {
-                module.currentSuite.run({ 'async': true });
+                $('.c-button--run-test').prop('disabled', true);
+                $('.c-table__cell--case-result[data-id]')
+                    .removeClass('c-table__cell--case-result-fastest')
+                    .removeClass('c-table__cell--case-result-slowest')
+                    .text('-');
+                $('.c-table__cell--case-result[data-id="' + module.currentSuite[0].id + '"]')
+                    .html('<span class="gauge-loader"></span>');
+                module.currentSuite
+                    .on('cycle', function(event) {
+                        console.log(String(event.target));
+                        var suite = module.currentSuite;
+                        $('.c-table__cell--case-result[data-id="' + event.target.id + '"]').text(event.target.toString());
+                        var currentIndex =  suite.indexOf(event.target);
+                        if (currentIndex > -1 && currentIndex < suite.length - 1) {
+                            $('.c-table__cell--case-result[data-id="' + suite[currentIndex+1].id + '"]')
+                                .html('<span class="gauge-loader"></span>')
+                        }
+
+                    })
+                    .on('complete', function() {
+                        console.log('Fastest is ' + this.filter('fastest').map('name'));
+                        $('.c-button--run-test').prop('disabled', false);
+                        var fastest = this.filter('fastest').map(function (item) {
+                            return $('.c-table__cell--case-result[data-id="' + item.id + '"]')
+                        });
+                        var slowest = this.filter('slowest').map(function (item) {
+                            return $('.c-table__cell--case-result[data-id="' + item.id + '"]')
+                        });
+                        fastest.forEach(function (el) {
+                            el.addClass('c-table__cell--case-result-fastest');
+                        });
+                        slowest.forEach(function (el) {
+                            el.addClass('c-table__cell--case-result-slowest');
+                        })
+                    })
+                    .run({ 'async': true });
             });
             $('.c-tab-heading', container).on('click', function (e) {
                 var targetEl = e.target;
