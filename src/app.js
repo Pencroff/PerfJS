@@ -9,11 +9,12 @@
     function run() {
         var caseList = root.caseList;
         var caseDetails = root.caseDetails;
+        var search = root.search;
         var routes = {
             '!': [caseList.onRoot, caseDetails.onRoot],
             '!:id': [caseList.byId, caseDetails.byId],
-            '!search/:query': [caseList.search],
-            '!tag/:tag': [caseList.byTag],
+            '!search/:query': [caseList.search, search.onSearch],
+            '!tag/:tag': [caseList.byTag, search.onTag],
         };
 
         var router = Router(routes);

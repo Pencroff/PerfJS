@@ -12,7 +12,6 @@
     module.byTag = byTagRoute;
 
     function onRootRoute() {
-        console.log('root');
         module.filteredData = root.data.slice(0);
         module.render(module.filteredData);
     }
