@@ -10,13 +10,13 @@
         var caseList = root.caseList;
         var caseDetails = root.caseDetails;
         var routes = {
-            '/': [caseList.onRoot, caseDetails.onRoot],
-            '/:id': [caseList.byId, caseDetails.byId],
-            '/search/:query': [caseList.search],
-            '/tag/:tag': [caseList.byTag],
+            '!': [caseList.onRoot, caseDetails.onRoot],
+            '!:id': [caseList.byId, caseDetails.byId],
+            '!search/:query': [caseList.search],
+            '!tag/:tag': [caseList.byTag],
         };
 
         var router = Router(routes);
-        router.init('/');
+        router.init('!');
     }
 })(window.PerformanceJs);

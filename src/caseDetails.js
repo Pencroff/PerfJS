@@ -35,6 +35,8 @@
 
     function transformSuiteToViewData(suite, test) {
         var result = {
+            id: test.id,
+            kebabName: _.kebabCase(test.name),
             name: test.name,
             platform: platform.description,
             source: test.fill.toString()
@@ -143,5 +145,12 @@
         } else {
             container.innerHTML = emptyTemplateFn({ text: item || '' });
         }
+        DISQUS.reset({
+            reload: true,
+            config: function () {
+                this.page.identifier = item.kebabName + '-' + item.id;
+                this.page.url = 'http://perfjs.info/#!' + item.id;
+            }
+        });
     }
 })(window.PerformanceJs);

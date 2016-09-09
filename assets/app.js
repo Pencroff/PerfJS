@@ -10,14 +10,14 @@
         var caseList = root.caseList;
         var caseDetails = root.caseDetails;
         var routes = {
-            '/': [caseList.onRoot, caseDetails.onRoot],
-            '/:id': [caseList.byId, caseDetails.byId],
-            '/search/:query': [caseList.search],
-            '/tag/:tag': [caseList.byTag],
+            '!': [caseList.onRoot, caseDetails.onRoot],
+            '!:id': [caseList.byId, caseDetails.byId],
+            '!search/:query': [caseList.search],
+            '!tag/:tag': [caseList.byTag],
         };
 
         var router = Router(routes);
-        router.init('/');
+        router.init('!');
     }
 })(window.PerformanceJs);
 /**
@@ -57,6 +57,8 @@
 
     function transformSuiteToViewData(suite, test) {
         var result = {
+            id: test.id,
+            kebabName: _.kebabCase(test.name),
             name: test.name,
             platform: platform.description,
             source: test.fill.toString()
@@ -165,6 +167,13 @@
         } else {
             container.innerHTML = emptyTemplateFn({ text: item || '' });
         }
+        DISQUS.reset({
+            reload: true,
+            config: function () {
+                this.page.identifier = item.kebabName + '-' + item.id;
+                this.page.url = 'http://perfjs.info/#!' + item.id;
+            }
+        });
     }
 })(window.PerformanceJs);
 
@@ -182,11 +191,12 @@
     module.byTag = byTagRoute;
 
     function onRootRoute() {
+        console.log('root');
         module.filteredData = root.data.slice(0);
         module.render(module.filteredData);
     }
     function byIdRoute(id) {
-        if (id === 'undefined' || id === 'null') window.location.hash = '/';
+        if (id === 'undefined' || id === 'null') window.location.hash = '!';
         if (!module.filteredData) {
             module.filteredData = root.data.slice(0);
         }
@@ -198,7 +208,7 @@
         module.render(data);
     }
     function searchRoute(query) {
-        if (query === 'undefined' || query === 'null') window.location.hash = '/';
+        if (query === 'undefined' || query === 'null') window.location.hash = '!';
         module.filteredData = _.filter(root.data, function(item) {
             item.active = item.id === module.selectedCase;
             return ((item.name && item.name.indexOf(query) > -1)
@@ -207,7 +217,7 @@
         module.render(module.filteredData);
     }
     function byTagRoute(tag) {
-        if (tag === 'undefined' || tag === 'null') window.location.hash = '/';
+        if (tag === 'undefined' || tag === 'null') window.location.hash = '!';
         module.filteredData = _.filter(root.data, function(item) {
             item.active = item.id === module.selectedCase;
             return _.includes(item.tags, tag);
@@ -227,13 +237,39 @@
     function onCaseSelect(e) {
         var el = e.target;
         var id = $(el).attr('data-id');
-        window.location.hash = '/' + id;
+        window.location.hash = '!' + id;
     }
     function onTagSelect(e) {
         var el = e.target;
         var tag = $(el).text().trim();
-        window.location.hash = '/tag/'+tag;
+        window.location.hash = '!tag/'+tag;
     }
+})(window.PerformanceJs);
+/**
+ * Created by Pencroff on 09-Sep-16.
+ */
+(function (root) {
+    root.search = root.search || {};
+    var module = root.search;
+
+    module.init = initSearch;
+    module.init();
+
+    // module.render = renderCaseList;
+    // module.onRoot = onRootRoute;
+    // module.byId = byIdRoute;
+    // module.search = searchRoute;
+    // module.byTag = byTagRoute;
+
+    function initSearch() {
+        $('.c-search__input').on('keypress', handleEvent);
+        $('.c-search__button').on('click', handleEvent);
+    }
+    
+    function handleEvent(e) {
+        console.dir(e);
+    }
+
 })(window.PerformanceJs);
 /**
  * Created by Pencroff on 04-Sep-16.

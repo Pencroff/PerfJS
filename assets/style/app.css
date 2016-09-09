@@ -3,6 +3,10 @@
     color: inherit;
     background-color: inherit;
 }
+.c-nav__link {
+    text-decoration: none;
+    color: inherit;
+}
 
 .c-card--test-desc {
     background-color: #f9f9f9

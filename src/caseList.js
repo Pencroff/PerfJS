@@ -12,11 +12,12 @@
     module.byTag = byTagRoute;
 
     function onRootRoute() {
+        console.log('root');
         module.filteredData = root.data.slice(0);
         module.render(module.filteredData);
     }
     function byIdRoute(id) {
-        if (id === 'undefined' || id === 'null') window.location.hash = '/';
+        if (id === 'undefined' || id === 'null') window.location.hash = '!';
         if (!module.filteredData) {
             module.filteredData = root.data.slice(0);
         }
@@ -28,7 +29,7 @@
         module.render(data);
     }
     function searchRoute(query) {
-        if (query === 'undefined' || query === 'null') window.location.hash = '/';
+        if (query === 'undefined' || query === 'null') window.location.hash = '!';
         module.filteredData = _.filter(root.data, function(item) {
             item.active = item.id === module.selectedCase;
             return ((item.name && item.name.indexOf(query) > -1)
@@ -37,7 +38,7 @@
         module.render(module.filteredData);
     }
     function byTagRoute(tag) {
-        if (tag === 'undefined' || tag === 'null') window.location.hash = '/';
+        if (tag === 'undefined' || tag === 'null') window.location.hash = '!';
         module.filteredData = _.filter(root.data, function(item) {
             item.active = item.id === module.selectedCase;
             return _.includes(item.tags, tag);
@@ -57,11 +58,11 @@
     function onCaseSelect(e) {
         var el = e.target;
         var id = $(el).attr('data-id');
-        window.location.hash = '/' + id;
+        window.location.hash = '!' + id;
     }
     function onTagSelect(e) {
         var el = e.target;
         var tag = $(el).text().trim();
-        window.location.hash = '/tag/'+tag;
+        window.location.hash = '!tag/'+tag;
     }
 })(window.PerformanceJs);

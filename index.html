@@ -11,16 +11,18 @@
 </head>
 <body class="c-text">
 <nav class="c-nav c-nav--inline">
-    <li class="c-nav__item c-nav__item--no-hover c-text--loud">Performance JS</li>
+    <li class="c-nav__item c-nav__item--no-hover c-text--loud">
+        <a href="//perfjs.info" target="_top" class="c-nav__link">Performance JS</li>
 </nav>
 <div class="o-grid o-panel o-panel--nav-top">
     <div class="o-grid__cell--width-30 o-panel-container">
         <div class="o-panel">
             <nav class="c-nav c-nav--top c-nav--light c-nav--inline">
                     <span class="c-nav__content" style="width: 100%">
-                        <div class="c-input-group">
-                            <input class="c-field c-field--small" type="text">
-                            <button class="c-button c-button--primary c-button--small">Search</button>
+                        <div class="c-input-group c-search">
+                            <input class="c-field c-field--small c-search__input" type="text">
+                            <button class="c-button c-button--primary c-button--small c-search__button"
+                                    type="button">Search</button>
                         </div>
                     </span>
             </nav>
@@ -45,19 +47,14 @@
 <script src="assets/templates.min.js"></script>
 <script src="assets/app.js"></script>
 <script src="assets/data.js"></script>
+<script>(function() {
+    var d = document, s = d.createElement('script');
+    s.src = '//perfjs-info.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.body).appendChild(s);
+})();</script>
 <script>
     PerformanceJs.app.run();
-
-//    Test example
-//    var list = PerformanceJs.data;
-//    var selected = list[1];
-//
-//    $script(['assets/vendor.js', 'assets/benchmark.js', 'assets/templates.min.js',
-//        'assets/app.js', 'data.js'], function () {
-//        setTimeout(function () {
-//
-//        }, 500)
-//    });
 </script>
 </body>
 </html>
