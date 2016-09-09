@@ -8,7 +8,7 @@
     module.byId = byIdRoute;
 
     function onRootRoute() {
-        renderCaseDetails('Please select test in list beside')
+        renderCaseDetails('Please select test in list beside (click on header)')
     }
 
     function byIdRoute(id) {
