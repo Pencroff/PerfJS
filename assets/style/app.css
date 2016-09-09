@@ -16,8 +16,8 @@
     top: 68px;
 }
 
-.c-test-details {
-    margin: 0 1em;
+.c-test-detail {
+    padding: 0 1em;
 }
 
 .c-table__row--heading .c-table__cell--case-header {
