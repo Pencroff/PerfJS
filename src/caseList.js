@@ -16,7 +16,8 @@
         module.render(module.filteredData);
     }
     function byIdRoute(id) {
-        if (id === 'undefined' || id === 'null') window.location.hash = '!';
+        var router = root.router;
+        if (id === 'undefined' || id === 'null') router.navigate('/');
         if (!module.filteredData) {
             module.filteredData = root.data.slice(0);
         }
@@ -55,13 +56,17 @@
         $('.c-tag', caseListContainer).on('click', onTagSelect)
     }
     function onCaseSelect(e) {
+        var router = root.router;
         var el = e.target;
         var id = $(el).attr('data-id');
-        window.location.hash = '!' + id;
+        router.navigate('/' + id);
+        //window.location.hash = '!' + id;
     }
     function onTagSelect(e) {
+        var router = root.router;
         var el = e.target;
         var tag = $(el).text().trim();
-        window.location.hash = '!tag/'+tag;
+        router.navigate('/tag/' + tag);
+        //window.location.hash = '!tag/'+tag;
     }
 })(window.PerformanceJs);
