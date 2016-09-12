@@ -23,11 +23,11 @@ gulp.task('generate-data-file', function() {
             var test = global.window.test;
             return [
                 '{ ',
-                    'id:"', test.id, '",',
-                    'name:"', test.name, '",',
-                    'description:"', test.description, '",',
-                    'tags:', '["', test.tags.join('","'), '"],',
-                    'url:"', test.url, '"',
+                    'id:\'', test.id, '\',',
+                    'name:\'', test.name, '\',',
+                    'description:\'', test.description, '\',',
+                    'tags:', '[\'', test.tags.join('\',\''), '\'],',
+                    'url:\'', test.url, '\'',
                 ' }'
             ].join('');
         }, {encoding: 'utf8'}))
