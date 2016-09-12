@@ -47,26 +47,32 @@
     }
     function renderCaseList(list) {
         var caseListContainer = $('.c-test-list')[0];
-        $('.c-card__content--divider', caseListContainer).off('click');
+        $('.c-card__content', caseListContainer).off('click');
+        $('.c-card__content > c-paragraph', caseListContainer).off('click');
         $('.c-tag', caseListContainer).off('click');
         caseListContainer.innerHTML = list.map(function (item) {
             return templateFn(item);
         }).join('');
-        $('.c-card__content--divider', caseListContainer).on('click', onCaseSelect);
-        $('.c-tag', caseListContainer).on('click', onTagSelect)
+        $('.c-tag', caseListContainer).on('click', onTagSelect);
+        $('.c-card__content', caseListContainer).on('click', onCaseSelect);
+        $('.c-card__content > c-paragraph', caseListContainer).on('click', onCaseSelect);
     }
     function onCaseSelect(e) {
         var router = root.router;
         var el = e.target;
         var id = $(el).attr('data-id');
+        if (!id) {
+            el = $(el).parent('.c-card__content[data-id]');
+            id = $(el).attr('data-id');
+        }
+        e.stopPropagation();
         router.navigate('/' + id);
-        //window.location.hash = '!' + id;
     }
     function onTagSelect(e) {
         var router = root.router;
         var el = e.target;
         var tag = $(el).text().trim();
+        e.stopPropagation();
         router.navigate('/tag/' + tag);
-        //window.location.hash = '!tag/'+tag;
     }
 })(window.PerformanceJs);
