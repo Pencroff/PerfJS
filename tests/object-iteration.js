@@ -3,7 +3,7 @@
  */
 
 window.test = {
-    id: '384861CA-DA2E-4FD2-A113-080010D4A42B',
+    id: '384A61CA-DA2E-4FD2-A113-080010D4A42B',
     name: 'object iteration',
     description: 'Performance test for iteration object properties',
     tags: ['object', 'iteration', 'basic'],
