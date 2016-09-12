@@ -18,6 +18,7 @@
     function byIdRoute(id) {
         var router = root.router;
         if (id === 'undefined' || id === 'null') router.navigate('/');
+        id =  id.substr(0, 36);
         if (!module.filteredData) {
             module.filteredData = root.data.slice(0);
         }

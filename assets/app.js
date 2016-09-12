@@ -49,7 +49,9 @@
 
     function byIdRoute(id) {
         $('head > script').remove();
-        var selectedCase = getCaseById(id.substr(0, 36), root.data);
+        if (id === 'undefined' || id === 'null') return;
+        id =  id.substr(0, 36);
+        var selectedCase = getCaseById(id, root.data);
         $script(selectedCase.url + '?v=' + Date.now(), function () {
             var test = window.test;
             var suite = new Benchmark.Suite;
@@ -211,6 +213,7 @@
     function byIdRoute(id) {
         var router = root.router;
         if (id === 'undefined' || id === 'null') router.navigate('/');
+        id =  id.substr(0, 36);
         if (!module.filteredData) {
             module.filteredData = root.data.slice(0);
         }
