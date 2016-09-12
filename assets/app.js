@@ -49,7 +49,7 @@
 
     function byIdRoute(id) {
         $('head > script').remove();
-        var selectedCase = getCaseById(id, root.data);
+        var selectedCase = getCaseById(id.substr(0, 36), root.data);
         $script(selectedCase.url + '?v=' + Date.now(), function () {
             var test = window.test;
             var suite = new Benchmark.Suite;
