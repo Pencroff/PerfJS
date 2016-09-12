@@ -149,7 +149,7 @@
             reload: true,
             config: function () {
                 this.page.identifier = item.kebabName + '-' + item.id;
-                this.page.url = 'http://perfjs.info/#!' + item.id;
+                this.page.url = 'http://perfjs.info/#!/' + item.id;
             }
         });
     }
