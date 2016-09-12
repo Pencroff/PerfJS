@@ -34,12 +34,13 @@
         }
     }
     function updatePageHash(value) {
+        var router = root.router;
         if (value.length === 0) {
-            window.location.hash = '!';
+            router.navigate('/');
         } else if (value.indexOf('tag:') === 0) {
-            window.location.hash = '!tag/'+ value.substr(4);
+            router.navigate('/tag/' + value.substr(4));
         } else {
-            window.location.hash = '!search/' + inputControl.val();
+            router.navigate('/search/' + inputControl.val());
         }
     }
 })(window.PerformanceJs);
