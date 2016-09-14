@@ -9,6 +9,7 @@ Compare performance different approaches in your browser
 
 ### Articles
 
+* [EN] [Writing Fast, Memory-Efficient JavaScript](https://goo.gl/RFi2a1) - old, but good
 * [EN] [Three JavaScript performance fundamentals that make Bluebird fast](http://goo.gl/7q4sPG)
 
 ### Videos
