@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/PerformanceJS.iml" filepath="$PROJECT_DIR$/.idea/PerformanceJS.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/PerfJS.iml" filepath="$PROJECT_DIR$/.idea/PerfJS.iml" />
     </modules>
   </component>
 </project>

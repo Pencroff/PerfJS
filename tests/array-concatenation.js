@@ -4,8 +4,8 @@
 
 window.test = {
     id: 'F33A9807-6D63-4773-AF70-7DA57E79A90C',
-    name: 'array concatenation',
-    description: 'Performance test for array concatenation',
+    name: 'array to string',
+    description: 'Performance test for array to string concatenation',
     tags: ['array', 'concatenation', 'basic'],
     url: 'tests/array-concatenation.js',
     fill: function (suite) {
