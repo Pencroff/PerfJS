@@ -1,4 +1,4 @@
-# [PerfJS.info](//perfjs.info)
+# [PerfJS.info](http://perfjs.info)
 Compare performance different JavaScript approaches in your browser.
 
 ## How to write good performance test
