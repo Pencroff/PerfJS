@@ -6,6 +6,20 @@
 .c-nav__link {
     text-decoration: none;
     color: inherit;
+    display: flex;
+    align-items: center;
+}
+
+.c-nav__desc {
+    margin-left: 10px;
+    margin-top: -8px;
+    color: #FF7043;
+}
+.c-nav__icon {
+    height: 32px;
+    width: 32px;
+    margin-top: -8px;
+    fill: #FF7043;
 }
 
 .c-card--test-desc {

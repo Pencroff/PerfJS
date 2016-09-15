@@ -1,5 +1,5 @@
-# Performance JS
-Compare performance different approaches in your browser
+# [PerfJS.info](//perfjs.info)
+Compare performance different JavaScript approaches in your browser.
 
 ## How to write good performance test
 
