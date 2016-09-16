@@ -11,6 +11,11 @@ window.test = {
     fill: function (suite) {
         var result = 0;
         var main, arr;
+        suite.add('by spread operator - ES2015', function () {
+            arr = [...main];
+            result += arr[0];
+            main.push(main.shift());
+        });
         suite.add('by slice', function () {
             arr = main.slice();
             result += arr[0];
@@ -26,6 +31,11 @@ window.test = {
             result += arr[0];
             main.push(main.shift());
         });
+        suite.add('by Array.from - ES2015', function () {
+            arr = Array.from(main);
+            result += arr[0];
+            main.push(main.shift());
+        });
         suite.add('by JSON.stringify => JSON.parse', function () {
             arr = JSON.parse(JSON.stringify(main));
             result += arr[0];
@@ -37,6 +47,17 @@ window.test = {
             var i = 0;
             while (i < len) {
                 arr[i] = main[i];
+                i += 1;
+            }
+            result += arr[0];
+            main.push(main.shift());
+        });
+        suite.add('by iteration with push', function () {
+            arr = [];
+            var len = main.length;
+            var i = 0;
+            while (i < len) {
+                arr.push(main[i]);
                 i += 1;
             }
             result += arr[0];
