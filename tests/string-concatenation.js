@@ -4,23 +4,31 @@
 
 window.test = {
     id: 'F33A9807-6D63-4773-AF70-7DA57E79A90C',
-    name: 'array to string',
-    description: 'Performance test for array to string concatenation',
-    tags: ['array', 'concatenation', 'basic'],
-    url: 'tests/array-concatenation.js',
+    name: 'string concatenation',
+    description: 'Performance test for string concatenation',
+    tags: ['string', 'concatenation', 'basic'],
+    url: 'tests/string-concatenation.js',
     fill: function (suite) {
         var result;
         var arr;
-        suite.add('by join', function () {
+        suite.add('by array join', function () {
             result = '';
             result += arr.join('');
         });
-        suite.add('by for loop', function () {
+        suite.add('by manual concatenation', function () {
             result = '';
             var len = arr.length;
             var i;
             for (i = 0; i < len; i += 1) {
                 result += arr[i];
+            }
+        });
+        suite.add('by String.prototype.concat', function () {
+            result = '';
+            var len = arr.length;
+            var i;
+            for (i = 0; i < len; i += 1) {
+                result = result.concat(arr[i]);
             }
         });
         suite.on('start cycle', function () {

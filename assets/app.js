@@ -44,7 +44,7 @@
     module.byId = byIdRoute;
 
     function onRootRoute() {
-        renderCaseDetails('Please select test in list beside (click on header)')
+        renderCaseDetails('Please select case in list beside or filter by tag')
     }
 
     function byIdRoute(id) {
