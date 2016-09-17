@@ -5,7 +5,7 @@
 window.test = {
     id: 'F33A9807-6D63-4773-AF70-7DA57E79A90C',
     name: 'string concatenation',
-    description: 'Performance test for string concatenation',
+    description: 'Performance case for string concatenation',
     tags: ['string', 'concatenation', 'basic'],
     url: 'tests/string-concatenation.js',
     fill: function (suite) {
@@ -39,10 +39,10 @@ window.test = {
         });
 
         function getArray() {
-            var len = 1000;
+            var len = 100;
             var arr = [];
             for (var i = 0; i < len; i += 1) {
-                arr[i] = Math.random().toString(36).substr(2, 1);
+                arr[i] = Math.random().toString(36).substr(2, Math.random() * 10 + 1);
             }
             return arr;
         }

@@ -5,7 +5,7 @@
 window.test = {
     id: '2DDD96CD-1F90-4792-9CE8-D6CA07CFC248',
     name: 'array iteration',
-    description: 'Performance test for iteration array elements.Comparison for StackOverflow question: What is the fastest way to loop through an array in JavaScript? (<a href=\"https://goo.gl/VxozLR\" target=\"_blank\">link</a>)',
+    description: 'Performance case for iteration array elements.Comparison for StackOverflow question: What is the fastest way to loop through an array in JavaScript? (<a href=\"https://goo.gl/VxozLR\" target=\"_blank\">link</a>)',
     tags: ['array', 'iteration', 'basic'],
     url: 'tests/array-iteration.js',
     fill: function (suite) {

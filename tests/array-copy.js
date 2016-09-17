@@ -5,7 +5,7 @@
 window.test = {
     id: 'DFD11651-3FB9-40A9-A233-C7BA15D1620F',
     name: 'array cloning',
-    description: 'Performance test for copy array elements. Most of the cases is just shallow copy, except JSON manipulation and lodash deep clone. Array contains number literals. Expected similar behavior with string literals. <a href=\"https://goo.gl/J60aIa\" target=\"_blank\">StackOverflow question</a>',
+    description: 'Performance case for copy array elements. Most of the cases is just shallow copy, except JSON manipulation and lodash deep clone. Array contains number literals. Expected similar behavior with string literals. <a href=\"https://goo.gl/J60aIa\" target=\"_blank\">StackOverflow question</a>',
     tags: ['array', 'cloning', 'basic'],
     url: 'tests/array-copy.js',
     fill: function (suite) {

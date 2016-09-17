@@ -5,7 +5,7 @@
 window.test = {
     id: '384A61CA-DA2E-4FD2-A113-080010D4A42B',
     name: 'object literal iteration',
-    description: 'Performance test for iteration object properties. Comparison for StackOverflow question: How do I loop through or enumerate a JavaScript object? (<a href=\"https://goo.gl/0QEGHB\" target=\"_blank\">link</a>)',
+    description: 'Performance case for iteration object properties. Comparison for StackOverflow question: How do I loop through or enumerate a JavaScript object? (<a href=\"https://goo.gl/0QEGHB\" target=\"_blank\">link</a>)',
     tags: ['object', 'iteration', 'basic'],
     url: 'tests/object-iteration.js',
     fill: function (suite) {
