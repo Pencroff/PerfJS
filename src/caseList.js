@@ -47,6 +47,16 @@
         module.render(module.filteredData);
     }
     function renderCaseList(list) {
+        list.sort(function (a, b) {
+            if (a.name > b.name) {
+                return 1;
+            }
+            if (a.name < b.name) {
+                return -1;
+            }
+            // a must be equal to b
+            return 0;
+        });
         var caseListContainer = $('.c-test-list')[0];
         $('.c-card__content', caseListContainer).off('click');
         $('.c-card__content > c-paragraph', caseListContainer).off('click');
