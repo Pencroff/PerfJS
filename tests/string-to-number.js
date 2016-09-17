@@ -18,6 +18,7 @@ window.test = {
                 result += (+arr[i]);
                 i += 1;
             }
+            arr.push(arr.shift());
         });
         suite.add('by minus zero', function () {
             var len = arr.length;
@@ -26,6 +27,7 @@ window.test = {
                 result += (arr[i] - 0);
                 i += 1;
             }
+            arr.push(arr.shift());
         });
         suite.add('multiplied by one', function () {
             var len = arr.length;
@@ -34,6 +36,7 @@ window.test = {
                 result += (arr[i] * 1);
                 i += 1;
             }
+            arr.push(arr.shift());
         });
         suite.add('by double bitwise operators', function () {
             var len = arr.length;
@@ -42,6 +45,7 @@ window.test = {
                 result += (~~arr[i]);
                 i += 1;
             }
+            arr.push(arr.shift());
         });
         suite.add('by bitwise shift operators', function () {
             var len = arr.length;
@@ -50,6 +54,16 @@ window.test = {
                 result += (arr[i] >>> 0);
                 i += 1;
             }
+            arr.push(arr.shift());
+        });
+        suite.add('by Number() constructor', function () {
+            var len = arr.length;
+            var i = 0;
+            while (i < len) {
+                result += Number(arr[i]);
+                i += 1;
+            }
+            arr.push(arr.shift());
         });
         suite.add('by parseInt', function () {
             var len = arr.length;
@@ -58,6 +72,7 @@ window.test = {
                 result += parseInt(arr[i], 10);
                 i += 1;
             }
+            arr.push(arr.shift());
         });
         suite.add('by Math.floor', function () {
             var len = arr.length;
@@ -66,6 +81,7 @@ window.test = {
                 result += Math.floor(arr[i]);
                 i += 1;
             }
+            arr.push(arr.shift());
         });
         suite.add('by Math.round', function () {
             var len = arr.length;
@@ -74,6 +90,7 @@ window.test = {
                 result += Math.round(arr[i]);
                 i += 1;
             }
+            arr.push(arr.shift());
         });
         suite.on('start cycle', function () {
             arr = getArray();
