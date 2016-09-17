@@ -74,6 +74,15 @@ window.test = {
             }
             arr.push(arr.shift());
         });
+        suite.add('by parseFloat', function () {
+            var len = arr.length;
+            var i = 0;
+            while (i < len) {
+                result += parseFloat(arr[i]);
+                i += 1;
+            }
+            arr.push(arr.shift());
+        });
         suite.add('by Math.floor', function () {
             var len = arr.length;
             var i = 0;
