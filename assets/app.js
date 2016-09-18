@@ -121,6 +121,7 @@
         if (utils.toType(item) === 'object') {
             $('.c-tab-heading', container).off('click');
             $('.c-button--run-test', container).off('click');
+            $('.c-table__cell-result, .c-table__cell-result > span', container).off('click');
 
             var content = $(templateFn(item));
             $('code[class*="language-"]', content)
@@ -130,43 +131,20 @@
             container.innerHTML = content.html();
 
             $('.c-button--run-test', container).on('click', function (e) {
+                $('.c-table__cell-result, .c-table__cell-result > span', container).off('click');
                 $('.c-button--run-test').prop('disabled', true);
-                $('.c-table__cell--case-result[data-id]')
-                    .removeClass('c-table__cell--case-result-fastest')
-                    .removeClass('c-table__cell--case-result-slowest')
-                    .text('-');
-                $('.c-table__cell--case-result[data-id="' + module.currentSuite[0].id + '"]')
+                $('.c-table__cell-result[data-id]')
+                    .removeClass('c-table__cell-result-fastest')
+                    .removeClass('c-table__cell-result-slowest');
+                $('.c-table__cell-result[data-id] > .c-table__cell-result-text').text('-')
+                $('.c-table__cell-result[data-id="' + module.currentSuite[0].id + '"] > .c-table__cell-result-text')
                     .html('<span class="gauge-loader"></span>');
                 module.currentSuite
-                    .on('cycle', function(event) {
-                        console.log(String(event.target));
-                        var suite = module.currentSuite;
-                        $('.c-table__cell--case-result[data-id="' + event.target.id + '"]').text(event.target.toString());
-                        var currentIndex =  suite.indexOf(event.target);
-                        if (currentIndex > -1 && currentIndex < suite.length - 1) {
-                            $('.c-table__cell--case-result[data-id="' + suite[currentIndex+1].id + '"]')
-                                .html('<span class="gauge-loader"></span>')
-                        }
-
-                    })
-                    .on('complete', function() {
-                        console.log('Fastest is ' + this.filter('fastest').map('name'));
-                        $('.c-button--run-test').prop('disabled', false);
-                        var fastest = this.filter('fastest').map(function (item) {
-                            return $('.c-table__cell--case-result[data-id="' + item.id + '"]')
-                        });
-                        var slowest = this.filter('slowest').map(function (item) {
-                            return $('.c-table__cell--case-result[data-id="' + item.id + '"]')
-                        });
-                        fastest.forEach(function (el) {
-                            el.addClass('c-table__cell--case-result-fastest');
-                        });
-                        slowest.forEach(function (el) {
-                            el.addClass('c-table__cell--case-result-slowest');
-                        })
-                    })
+                    .on('cycle', uiCycleHandler)
+                    .on('complete', uiCompleteHandler)
                     .run({ 'async': true });
             });
+            $('.c-table__cell-result, .c-table__cell-result > span', container).on('click', singleBenchRunner);
             $('.c-tab-heading', container).on('click', function (e) {
                 var targetEl = e.target;
                 var nextIndex = targetEl.previousElementSibling ? 1 : 0;
@@ -190,6 +168,69 @@
                 this.page.url = 'http://perfjs.info/#!/' + item.id;
             }
         });
+    }
+    function uiCycleHandler(event) {
+        console.log(String(event.target));
+        var suite = module.currentSuite;
+        $('.c-table__cell-result[data-id="' + event.target.id + '"] > .c-table__cell-result-text').text(event.target.toString());
+        var currentIndex =  suite.indexOf(event.target);
+        if (currentIndex > -1 && currentIndex < suite.length - 1) {
+            $('.c-table__cell-result[data-id="' + suite[currentIndex+1].id + '"] > .c-table__cell-result-text')
+                .html('<span class="gauge-loader"></span>')
+        }
+    }
+    function uiCompleteHandler() {
+        console.log('Fastest is ' + this.filter('fastest').map('name'));
+        $('.c-button--run-test').prop('disabled', false);
+        $('.c-table__cell-result, .c-table__cell-result > span').on('click', singleBenchRunner);
+        var fastest = this.filter('fastest').map(function (item) {
+            return $('.c-table__cell-result[data-id="' + item.id + '"]')
+        });
+        var slowest = this.filter('slowest').map(function (item) {
+            return $('.c-table__cell-result[data-id="' + item.id + '"]')
+        });
+        fastest.forEach(function (el) {
+            el.addClass('c-table__cell-result--fastest');
+        });
+        slowest.forEach(function (el) {
+            el.addClass('c-table__cell-result--slowest');
+        })
+    }
+    function singleBenchRunner(e) {
+        $('.c-button--run-test').prop('disabled', true);
+        $('.c-table__cell-result, .c-table__cell-result > span').off('click');
+        var targetEl = e.target;
+        var el = $(targetEl);
+        var strId = el.attr('data-id');
+        if (!strId) {
+            el = $(el).parent('.c-table__cell-result[data-id]');
+            strId = $(el).attr('data-id');
+        }
+        var id = parseInt(strId, 10);
+        console.log(id);
+        var bench = _.find(module.currentSuite, { id: id });
+        if (bench) {
+            var clone = bench.clone();
+            var events = module.currentSuite.events;
+            _.forEach(events.start, function (fn) {
+                clone.on('start', fn);
+            });
+            _.forEach(events.cycle, function (fn) {
+                if (fn !== uiCycleHandler) clone.on('cycle', fn);
+            });
+            el.children('.c-table__cell-result-text').html('<span class="gauge-loader"></span>');
+            clone
+                .on('complete', completeHandler)
+                .run({ 'async': true });
+        }
+        function completeHandler(e) {
+            clone.off('start');
+            clone.off('cycle');
+            clone.off('complete');
+            el.children('.c-table__cell-result-text').text(clone.toString());
+            $('.c-button--run-test').prop('disabled', false);
+            $('.c-table__cell-result, .c-table__cell-result > span').on('click', singleBenchRunner);
+        }
     }
 })(window.PerformanceJs);
 
