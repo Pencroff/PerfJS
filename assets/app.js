@@ -14,18 +14,28 @@
         var router = new Grapnel({ pushState : false, root: '', hashBang: true });
         root.router = router;
         router.get('/search/:query', function (req, e) {
+            ga('send', 'event', 'Navigation', 'search', req.params.query);
             caseList.search(req.params.query);
             search.onSearch(req.params.query);
         });
         router.get('/tag/:tag', function (req, e) {
+            ga('send', 'event', 'Navigation', 'by tag', req.params.tag);
             caseList.byTag(req.params.tag);
             search.onTag(req.params.tag);
         });
         router.get('/:id', function (req, e) {
+            ga('send', 'event', 'Navigation', 'by id', req.params.id);
             caseList.byId(req.params.id);
             caseDetails.byId(req.params.id);
         });
+        router.get('/:id/:action', function (req, e) {
+            ga('send', 'event', 'Test', req.params.action);
+        });
+        router.get('/:id/:action/:caseId', function (req, e) {
+            ga('send', 'event', 'Test', req.params.action, req.params.caseId);
+        });
         router.get('/', function () {
+            ga('send', 'event', 'Navigation', 'root');
             caseList.onRoot();
             caseDetails.onRoot();
         });
@@ -114,6 +124,8 @@
     }
 
     function renderCaseDetails(item) {
+        var router = root.router;
+        var test = window.test;
         var utils = root.utils;
         var container = $('.c-test-detail')[0];
         var templateFn = root.JST['caseDetails'];
@@ -131,6 +143,7 @@
             container.innerHTML = content.html();
 
             $('.c-button--run-test', container).on('click', function (e) {
+                router.navigate('/' + test.id + '/all');
                 $('.c-table__cell-result, .c-table__cell-result > span', container).off('click');
                 $('.c-button--run-test').prop('disabled', true);
                 $('.c-table__cell-result[data-id]')
@@ -197,6 +210,8 @@
         })
     }
     function singleBenchRunner(e) {
+        var router = root.router;
+        var test = window.test;
         $('.c-button--run-test').prop('disabled', true);
         $('.c-table__cell-result, .c-table__cell-result > span').off('click');
         var targetEl = e.target;
@@ -207,7 +222,7 @@
             strId = $(el).attr('data-id');
         }
         var id = parseInt(strId, 10);
-        console.log(id);
+        router.navigate('/' + test.id + '/single/' + id);
         var bench = _.find(module.currentSuite, { id: id });
         if (bench) {
             var clone = bench.clone();
