@@ -30,16 +30,18 @@
         module.render(data);
     }
     function searchRoute(query) {
-        if (query === 'undefined' || query === 'null') window.location.hash = '!';
+        var router = root.router;
+        if (query === 'undefined' || query === 'null') router.navigate('/');
         module.filteredData = _.filter(root.data, function(item) {
             item.active = item.id === module.selectedCase;
-            return ((item.name && item.name.indexOf(query) > -1)
-                || (item.description && item.description.indexOf(query) > -1));
+            return ((item.name && item.name.toLowerCase().indexOf(query.toLowerCase()) > -1)
+                || (item.description && item.description.toLowerCase().indexOf(query.toLowerCase()) > -1));
         });
         module.render(module.filteredData);
     }
     function byTagRoute(tag) {
-        if (tag === 'undefined' || tag === 'null') window.location.hash = '!';
+        var router = root.router;
+        if (tag === 'undefined' || tag === 'null') router.navigate('/');
         module.filteredData = _.filter(root.data, function(item) {
             item.active = item.id === module.selectedCase;
             return _.includes(item.tags, tag);

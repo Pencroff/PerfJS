@@ -33,12 +33,18 @@
             gaTrack('/#!/' + req.params.id, 'PerfJS - test: ' + testName);
         });
         router.get('/:id/:action', function (req, e) {
-            ga('send', 'event', 'Test', req.params.action,
-                'Test: ' + req.params.id + ' - ' + req.params.action);
+            var id = req.params.id;
+            if (id !== 'tag' && id !== 'search') {
+                ga('send', 'event', 'Test', req.params.action,
+                    'Test: ' + req.params.id + ' - ' + req.params.action);
+            }
         });
         router.get('/:id/:action/:caseId', function (req, e) {
-            ga('send', 'event', 'Test', req.params.action,
-                'Test: ' + req.params.id + ' - ' + req.params.action + ': ' + req.params.caseId);
+            var id = req.params.id;
+            if (id !== 'tag' && id !== 'search') {
+                ga('send', 'event', 'Test', req.params.action,
+                    'Test: ' + req.params.id + ' - ' + req.params.action + ': ' + req.params.caseId);
+            }
         });
         router.get('/', function () {
             ga('send', 'event', 'Navigation', 'root', 'Navigation root');
@@ -293,16 +299,18 @@
         module.render(data);
     }
     function searchRoute(query) {
-        if (query === 'undefined' || query === 'null') window.location.hash = '!';
+        var router = root.router;
+        if (query === 'undefined' || query === 'null') router.navigate('/');
         module.filteredData = _.filter(root.data, function(item) {
             item.active = item.id === module.selectedCase;
-            return ((item.name && item.name.indexOf(query) > -1)
-                || (item.description && item.description.indexOf(query) > -1));
+            return ((item.name && item.name.toLowerCase().indexOf(query.toLowerCase()) > -1)
+                || (item.description && item.description.toLowerCase().indexOf(query.toLowerCase()) > -1));
         });
         module.render(module.filteredData);
     }
     function byTagRoute(tag) {
-        if (tag === 'undefined' || tag === 'null') window.location.hash = '!';
+        var router = root.router;
+        if (tag === 'undefined' || tag === 'null') router.navigate('/');
         module.filteredData = _.filter(root.data, function(item) {
             item.active = item.id === module.selectedCase;
             return _.includes(item.tags, tag);

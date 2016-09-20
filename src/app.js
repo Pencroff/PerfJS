@@ -33,12 +33,18 @@
             gaTrack('/#!/' + req.params.id, 'PerfJS - test: ' + testName);
         });
         router.get('/:id/:action', function (req, e) {
-            ga('send', 'event', 'Test', req.params.action,
-                'Test: ' + req.params.id + ' - ' + req.params.action);
+            var id = req.params.id;
+            if (id !== 'tag' && id !== 'search') {
+                ga('send', 'event', 'Test', req.params.action,
+                    'Test: ' + req.params.id + ' - ' + req.params.action);
+            }
         });
         router.get('/:id/:action/:caseId', function (req, e) {
-            ga('send', 'event', 'Test', req.params.action,
-                'Test: ' + req.params.id + ' - ' + req.params.action + ': ' + req.params.caseId);
+            var id = req.params.id;
+            if (id !== 'tag' && id !== 'search') {
+                ga('send', 'event', 'Test', req.params.action,
+                    'Test: ' + req.params.id + ' - ' + req.params.action + ': ' + req.params.caseId);
+            }
         });
         router.get('/', function () {
             ga('send', 'event', 'Navigation', 'root', 'Navigation root');
