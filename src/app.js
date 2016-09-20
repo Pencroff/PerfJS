@@ -14,42 +14,52 @@
         var router = new Grapnel({ pushState : false, root: '', hashBang: true });
         root.router = router;
         router.get('/search/:query', function (req, e) {
-            ga('send', 'event', 'Navigation', 'search', 'Navigation search: ' + req.params.query);
-            caseList.search(req.params.query);
-            search.onSearch(req.params.query);
-            gaTrack('/#!/search/' + req.params.query, 'PerfJS - search: ' + req.params.query);
-            ga('send', 'pageview', '/#!/search?q=' + req.params.query);
+            var query = req.params.query;
+            ga('send', 'event', 'Navigation', 'search', 'Navigation search: ' + query);
+            caseList.search(query);
+            search.onSearch(query);
+            var title = 'PerfJS - search: ' + query;
+            gaTrack('/#!/search/' + query, title);
+            document.title = title;
+            e.stopPropagation();
         });
         router.get('/tag/:tag', function (req, e) {
-            ga('send', 'event', 'Navigation', 'by tag', 'Navigation tag: ' + req.params.tag);
-            caseList.byTag(req.params.tag);
-            search.onTag(req.params.tag);
-            gaTrack('/#!/tag/' + req.params.tag, 'PerfJS - tag: ' + req.params.tag);
+            var tag = req.params.tag;
+            ga('send', 'event', 'Navigation', 'by tag', 'Navigation tag: ' + tag);
+            caseList.byTag(tag);
+            search.onTag(tag);
+            var title = 'PerfJS - tag: ' + tag;
+            gaTrack('/#!/tag/' + tag, title);
+            document.title = title;
+            e.stopPropagation();
         });
         router.get('/:id', function (req, e) {
-            ga('send', 'event', 'Navigation', 'by id', 'Navigation id: ' + req.params.id);
-            caseList.byId(req.params.id);
-            var testName = caseDetails.byId(req.params.id);
-            gaTrack('/#!/' + req.params.id, 'PerfJS - test: ' + testName);
+            var id = req.params.id;
+            ga('send', 'event', 'Navigation', 'by id', 'Navigation id: ' + id);
+            caseList.byId(id);
+            var testName = caseDetails.byId(id);
+            var title = 'PerfJS - test: ' + testName;
+            gaTrack('/#!/' + id, title);
+            document.title = title;
+            e.stopPropagation();
         });
         router.get('/:id/:action', function (req, e) {
-            var id = req.params.id;
-            if (id !== 'tag' && id !== 'search') {
-                ga('send', 'event', 'Test', req.params.action,
-                    'Test: ' + req.params.id + ' - ' + req.params.action);
-            }
+            ga('send', 'event', 'Test', req.params.action,
+                'Test: ' + req.params.id + ' - ' + req.params.action);
+            e.stopPropagation();
         });
         router.get('/:id/:action/:caseId', function (req, e) {
-            var id = req.params.id;
-            if (id !== 'tag' && id !== 'search') {
-                ga('send', 'event', 'Test', req.params.action,
-                    'Test: ' + req.params.id + ' - ' + req.params.action + ': ' + req.params.caseId);
-            }
+            ga('send', 'event', 'Test', req.params.action,
+                'Test: ' + req.params.id + ' - ' + req.params.action + ': ' + req.params.caseId);
+            e.stopPropagation();
         });
         router.get('/', function () {
             ga('send', 'event', 'Navigation', 'root', 'Navigation root');
             caseList.onRoot();
             caseDetails.onRoot();
+            var title = 'PerfJS';
+            gaTrack('/#!/', title);
+            document.title = title;
         });
         router.get('', function () {
             router.navigate('/');
