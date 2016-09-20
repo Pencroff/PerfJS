@@ -25,7 +25,8 @@
             } else {
                 finishSuiteSetup(suite);
             }
-        })
+        });
+        return selectedCase.name;
     }
 
     function finishSuiteSetup(suite) {
