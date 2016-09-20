@@ -18,6 +18,7 @@
             caseList.search(req.params.query);
             search.onSearch(req.params.query);
             gaTrack('/#!/search/' + req.params.query, 'PerfJS - search: ' + req.params.query);
+            ga('send', 'pageview', '/#!/search?q=' + req.params.query);
         });
         router.get('/tag/:tag', function (req, e) {
             ga('send', 'event', 'Navigation', 'by tag', 'Navigation tag: ' + req.params.tag);
