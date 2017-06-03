@@ -1,0 +1,8 @@
+<div>
+  <div *ngIf="!isTestSelected()">
+    <h3>{{'detail.empty' | translate}}</h3>
+  </div>
+  <div *ngIf="isTestSelected()">
+    Details
+  </div>
+</div>

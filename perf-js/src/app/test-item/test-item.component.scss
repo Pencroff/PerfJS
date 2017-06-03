@@ -1,0 +1,17 @@
+.app-test-item {
+  margin-top: 5px;
+  &__header {
+    &--active {
+      font-style: italic;
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+  }
+
+  &__description {
+    margin: 0 5px 15px;
+  }
+  &__tag {
+    margin: 2px;
+  }
+}

@@ -1,0 +1,17 @@
+<div class="ui-g">
+  <div class="ui-g-9">
+    <input pInputText
+           type="text"
+           class="app-serach__field"
+           [(ngModel)]="searchText"/>
+  </div>
+  <div class="ui-g-3">
+    <button pButton
+            type="button"
+            class="app-serach__button"
+            icon="fa-search"
+            iconPos="left"
+            label="{{ 'search.action' | translate}}">
+    </button>
+  </div>
+</div>

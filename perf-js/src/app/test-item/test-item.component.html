@@ -1,0 +1,17 @@
+<div class="app-test-item" (click)="onSelect($event, data)">
+  <p-panel>
+    <p-header>
+      <div class="app-test-item__header" [ngClass]="{'app-test-item__header--active': (isActive())}">{{data.name}}</div>
+    </p-header>
+    <div [innerHtml]="data.description" class="app-test-item__description"></div>
+    <div class="app-test-item__tag-list">
+      <button pButton
+              class="app-test-item__tag"
+              *ngFor="let tag of data.tags"
+              type="button"
+              (click)="onClickTag($event, tag)"
+              label="{{tag}}">
+      </button>
+    </div>
+  </p-panel>
+</div>

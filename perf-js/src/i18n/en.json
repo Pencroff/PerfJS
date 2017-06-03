@@ -1,0 +1,12 @@
+{
+  "header": {
+    "title": "PerfJS",
+    "link": "Contribute new case on GitHub"
+  },
+  "search": {
+    "action": "Search"
+  },
+  "detail": {
+    "empty": "Please select case in list beside or filter by tag"
+  }
+}
