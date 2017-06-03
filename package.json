@@ -1,5 +1,5 @@
 {
-  "name": "performancejs",
+  "name": "PerfJS",
   "version": "1.0.0",
   "description": "Compare performance different approaches in your browser",
   "main": "data.js",
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Pencroff/PerformanceJS.git"
+    "url": "git+https://github.com/Pencroff/PerfJS.git"
   },
   "author": "Sergey Daniloff @Pencroff",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Pencroff/PerformanceJS/issues"
+    "url": "https://github.com/Pencroff/PerfJS/issues"
   },
-  "homepage": "https://github.com/Pencroff/PerformanceJS#readme",
+  "homepage": "https://github.com/Pencroff/PerfJS#readme",
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
