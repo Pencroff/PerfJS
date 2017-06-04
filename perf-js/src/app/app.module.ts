@@ -19,6 +19,7 @@ import { TestListComponent } from './test-list/test-list.component';
 import { TestItemComponent } from './test-item/test-item.component';
 import { TestItemDetailComponent } from './test-item-detail/test-item-detail.component';
 import { HomeComponent } from './home/home.component';
+import { LoaderService } from './loader.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: Http) {
@@ -54,7 +55,9 @@ export function HttpLoaderFactory(http: Http) {
     InputTextModule,
     ButtonModule,
   ],
-  providers: [],
+  providers: [
+    LoaderService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

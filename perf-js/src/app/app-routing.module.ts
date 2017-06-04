@@ -7,9 +7,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 
 const appRoutes: Routes = [
-  { path: 'tag/:tag', component: HomeComponent },
-  { path: 'test/:guid', component: HomeComponent },
   { path: '', component: HomeComponent },
+  { path: 'tag/:tag', component: HomeComponent },
+  { path: 'search/:q', component: HomeComponent },
+  { path: 'test/:guid', component: HomeComponent },
+  { path: '**', component: HomeComponent },
 ];
 
 @NgModule({

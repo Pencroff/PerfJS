@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RoutesRecognized, ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
+
+import _ from 'lodash';
 
 import data from '../../data/index';
 
@@ -13,24 +15,30 @@ import 'rxjs/add/operator/filter';
 })
 export class TestListComponent implements OnInit {
   private dataArr: object[];
-  constructor(private router: Router,
-              private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute) {
     const me = this;
     me.dataArr = data;
-    console.log('list', router.events);
-    router.events
-      .filter(event => event instanceof RoutesRecognized )
-      .subscribe((event: RoutesRecognized) => {
-        // You only receive NavigationStart events
-        console.log('event', event);
-      });
-    // route.params.subscribe((params) => console.log('params', params));
   }
 
   ngOnInit() {
-    this.route.params
+    const me = this;
+    me.route.params
       .subscribe((params: Params) => {
-        console.log('params', params);
+        const tag = params['tag'];
+        const q = params['q'];
+        if (tag) {
+          me.dataArr = _.filter(data, (item) => item.tags.indexOf(tag) > -1);
+        } else if (q) {
+          me.dataArr = _.filter(data, (item) => {
+            const qStr = q.toLowerCase();
+            const nameStr = item.name.toLowerCase() || '';
+            const descStr = item.description.toLowerCase() || '';
+            const result = nameStr.indexOf(qStr) > -1 || descStr.indexOf(qStr) > -1;
+            return result;
+          });
+        } else {
+          me.dataArr = data;
+        }
       });
   }
 

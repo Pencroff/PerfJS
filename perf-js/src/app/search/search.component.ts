@@ -17,10 +17,23 @@ export class SearchComponent implements OnInit {
     const me = this;
     me.route.params
       .subscribe((params: Params) => {
-        if (params.tag) {
+        const tag = params['tag'];
+        if (tag) {
           me.searchText = `tag:${params.tag}`
         }
+        const q = params['q'];
+        if (q) {
+          me.searchText = q;
+        }
       });
+  }
+
+  updateSerach(event) {
+    console.log('key', event);
+  }
+  onSearch(event) {
+    const me = this;
+    me.router.navigateByUrl(`search/${me.searchText}`);
   }
 
 }
