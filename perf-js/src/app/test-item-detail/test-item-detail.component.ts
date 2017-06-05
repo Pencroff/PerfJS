@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import Prism from 'prismjs';
+
 import { LoaderService } from '../loader.service';
 
 @Component({
@@ -10,6 +12,7 @@ import { LoaderService } from '../loader.service';
 })
 export class TestItemDetailComponent implements OnInit {
   private guid: string;
+  public data: object;
   constructor( private loaderService: LoaderService,
                private route: ActivatedRoute) {
   }
@@ -18,15 +21,22 @@ export class TestItemDetailComponent implements OnInit {
     const me = this;
     me.route.params.subscribe((params) => {
       me.guid = params['guid'];
-      me.loaderService.loadScript(me.guid)
+      me.loaderService
+        .loadScript(me.guid)
         .then((viewData) => {
           console.log(viewData);
+          me.data = viewData;
         });
     })
   }
 
   isTestSelected() {
-    const result = !!window['test'];
+    const me = this;
+    const result = !!window['test'] && me.data;
+    return result;
+  }
+  highlightSource(v) {
+    const result = Prism.highlight(v, Prism.languages.javascript);
     return result;
   }
 }

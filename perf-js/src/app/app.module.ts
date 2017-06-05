@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
-import { PanelModule, InputTextModule, ButtonModule } from 'primeng/primeng';
+import { PanelModule, InputTextModule, ButtonModule, TabViewModule } from 'primeng/primeng';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -54,6 +54,7 @@ export function HttpLoaderFactory(http: Http) {
     PanelModule,
     InputTextModule,
     ButtonModule,
+    TabViewModule
   ],
   providers: [
     LoaderService,

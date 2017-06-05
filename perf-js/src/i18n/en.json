@@ -7,6 +7,13 @@
     "action": "Search"
   },
   "detail": {
-    "empty": "Please select case in list beside or filter by tag"
+    "empty": "Please select case in list beside or filter by tag",
+    "test": "Test",
+    "source": "Source",
+    "runAll": "Run All Tests",
+    "grid": {
+      "test": "Test",
+      "result": "Result, (ops/sec)"
+    }
   }
 }

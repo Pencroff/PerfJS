@@ -21,8 +21,9 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
+        "assets/prism.css",
         "assets/primeng.min.css",
-        "assets/themes/pepper-grinder/theme.css",
+        "assets/themes/bootstrap/theme.css",
         "assets/font-awesome/css/font-awesome.min.css",
         "styles.scss"
       ],

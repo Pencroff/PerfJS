@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 
 import _ from 'lodash';
 import scriptjs from 'scriptjs';
-import Benchmark from 'benchmark';
-import platform from 'platform';
+import Promise from 'bluebird';
 
 import data from '../data/index';
-import { promise } from 'selenium-webdriver';
+
+const Benchmark = window['Benchmark'];
+const platform = window['platform'];
 
 @Injectable()
 export class LoaderService {
@@ -17,17 +18,16 @@ export class LoaderService {
     const me = this;
     const scriptData = _.find(data, { id });
     me.removeScriptFromHead();
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       if (!scriptData) {
-        reject(new Error(`No script data for id: ${id}`));
+        resolve(null);
       }
-      scriptjs(`data/${scriptData.url}?v=${Date.now()}`, function () {
-        console.log('test', window['test']);
+      scriptjs(`data/${scriptData.url}?v=${Date.now()}`, () => {
         const test = window['test'];
         const suite = new Benchmark.Suite;
         const testFillResult = test.fill(suite);
         let promise;
-        if (_.isPromise(testFillResult)) {
+        if (me.isPromise(testFillResult)) {
           promise = testFillResult.then((suiteItem) => me.transformSuiteToViewData(suiteItem, test));
         } else {
           promise = me.transformSuiteToViewData(suite, test);
@@ -68,5 +68,12 @@ export class LoaderService {
         el.parent.removeChild(el);
       }
     });
+  }
+  private isPromise(v) {
+    let result = false;
+    if ((_.isObject(v) || _.isFunction(v)) && _.isFunction(v.then)) {
+      result = true;
+    }
+    return result;
   }
 }

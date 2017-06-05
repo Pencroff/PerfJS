@@ -3,6 +3,51 @@
     <h3>{{'detail.empty' | translate}}</h3>
   </div>
   <div *ngIf="isTestSelected()">
-    Details
+    <h3>{{data.name}}</h3>
+    <p-tabView>
+      <p-tabPanel header="{{ 'detail.test' | translate }}">
+        <div class="ui-g">
+          <div class="ui-g-3">
+            <button pButton
+                    type="button"
+                    class="ui-button-warning"
+                    label="{{ 'detail.runAll' | translate }}"
+                    (click)="runAllTests($event)">
+            </button>
+          </div>
+        </div>
+        <div class="ui-g">
+          <div class="ui-g-12 app-test-item-detail__platform">
+            {{ data.platform }}
+          </div>
+        </div>
+        <div class="ui-g">
+          <div class="ui-g-10 app-test-item-detail__grid-header">
+            {{ 'detail.grid.test' | translate }}
+          </div>
+          <div class="ui-g-2 app-test-item-detail__grid-header">
+            {{ 'detail.grid.result' | translate }}
+          </div>
+        </div>
+        <div class="ui-g" *ngFor="let case of data.cases;">
+          <div class="ui-g-3">
+            {{ case.name }}
+          </div>
+          <div class="ui-g-7">
+            <pre class="app-test-item-detail__source">
+              <code class="language-javascript" [innerHtml]="highlightSource(case.source)"></code>
+            </pre>
+          </div>
+          <div class="ui-g-2">
+            -
+          </div>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel header="{{ 'detail.source' | translate }}">
+        <pre class="app-test-item-detail__source">
+          <code class="language-javascript" [innerHtml]="highlightSource(data.source)"></code>
+        </pre>
+      </p-tabPanel>
+    </p-tabView>
   </div>
 </div>
