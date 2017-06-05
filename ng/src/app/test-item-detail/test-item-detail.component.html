@@ -1,0 +1,60 @@
+<div>
+  <div *ngIf="!isTestSelected()">
+    <h3>{{'detail.empty' | translate}}</h3>
+  </div>
+  <div *ngIf="isTestSelected()">
+    <h3>{{data.name}}</h3>
+    <p-tabView>
+      <p-tabPanel header="{{ 'detail.test' | translate }}">
+        <div class="ui-g">
+          <div class="ui-g-3">
+            <button pButton
+                    type="button"
+                    class="ui-button-warning"
+                    label="{{ 'detail.runAll' | translate }}"
+                    (click)="runAll($event)"
+                    [disabled]="isDisabled()">
+            </button>
+          </div>
+        </div>
+        <div class="ui-g">
+          <div class="ui-g-12 app-test-item-detail__platform">
+            {{ data.platform }}
+          </div>
+        </div>
+        <div class="ui-g">
+          <div class="ui-g-10 app-test-item-detail__grid-header">
+            {{ 'detail.grid.test' | translate }}
+          </div>
+          <div class="ui-g-2 app-test-item-detail__grid-header">
+            {{ 'detail.grid.result' | translate }}
+          </div>
+        </div>
+        <div class="app-test-item-detail__table">
+          <div class="ui-g app-test-item-detail__row" *ngFor="let testCase of data.cases;">
+            <div class="ui-g-3">
+              {{ testCase.name }}
+            </div>
+            <div class="ui-g-6">
+            <pre class="app-test-item-detail__source">
+              <code class="language-javascript" [innerHtml]="highlightSource(testCase.source)"></code>
+            </pre>
+            </div>
+            <div class="ui-g-3" class="app-test-item-detail__result"
+                 [ngClass] = "getResultModifiers(testCase.id)"
+                 (click)="runSingle($event, testCase.id)">
+              <span class="app-test-item-detail__result-text" [innerHtml]="getCaseResult(testCase.id)"></span>
+              <br/>
+              <span class="app-test-item-detail__result-action">(Click for single run)</span>
+            </div>
+          </div>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel header="{{ 'detail.source' | translate }}">
+        <pre class="app-test-item-detail__source">
+          <code class="language-javascript" [innerHtml]="highlightSource(data.source)"></code>
+        </pre>
+      </p-tabPanel>
+    </p-tabView>
+  </div>
+</div>

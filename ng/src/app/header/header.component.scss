@@ -1,0 +1,46 @@
+
+
+.app-header {
+  $bg-color: black;
+  $color: white;
+
+  @mixin element-size() {
+    height: 64px;
+    line-height: 35px;
+    font-size: 24px;
+  }
+  @mixin center-layout() {
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  background: $bg-color;
+  color: $color;
+  &__title {
+    @include element-size();
+  }
+  &__lang {
+    margin-top: 8px;
+    font-size: 18px;
+    background: lighten( $bg-color, 20% );
+    color: darken( $color, 5% );
+    border: lighten( $bg-color, 40% );
+    padding: 5px 3px;
+  }
+  &__git-hub {
+    @include element-size();
+    @include center-layout();
+    text-decoration: none;
+    color: #f0ad4e;
+    &:hover {
+      background: lighten( $bg-color, 20% );
+    }
+  }
+  &__link {
+    color: $color;
+    text-decoration: none;
+    &--git-hub {
+      color: orange;
+    }
+  }
+}
