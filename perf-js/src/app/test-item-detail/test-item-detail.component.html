@@ -12,7 +12,8 @@
                     type="button"
                     class="ui-button-warning"
                     label="{{ 'detail.runAll' | translate }}"
-                    (click)="runAllTests($event)">
+                    (click)="runAll($event)"
+                    [disabled]="isDisabled()">
             </button>
           </div>
         </div>
@@ -29,17 +30,23 @@
             {{ 'detail.grid.result' | translate }}
           </div>
         </div>
-        <div class="ui-g" *ngFor="let case of data.cases;">
-          <div class="ui-g-3">
-            {{ case.name }}
-          </div>
-          <div class="ui-g-7">
+        <div class="app-test-item-detail__table">
+          <div class="ui-g app-test-item-detail__row" *ngFor="let testCase of data.cases;">
+            <div class="ui-g-3">
+              {{ testCase.name }}
+            </div>
+            <div class="ui-g-6">
             <pre class="app-test-item-detail__source">
-              <code class="language-javascript" [innerHtml]="highlightSource(case.source)"></code>
+              <code class="language-javascript" [innerHtml]="highlightSource(testCase.source)"></code>
             </pre>
-          </div>
-          <div class="ui-g-2">
-            -
+            </div>
+            <div class="ui-g-3" class="app-test-item-detail__result"
+                 [ngClass] = "getResultModifiers(testCase.id)"
+                 (click)="runSingle($event, testCase.id)">
+              <span class="app-test-item-detail__result-text" [innerHtml]="getCaseResult(testCase.id)"></span>
+              <br/>
+              <span class="app-test-item-detail__result-action">(Click for single run)</span>
+            </div>
           </div>
         </div>
       </p-tabPanel>

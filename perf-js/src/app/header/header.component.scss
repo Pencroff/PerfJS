@@ -31,7 +31,7 @@
     @include element-size();
     @include center-layout();
     text-decoration: none;
-    color: orange;
+    color: #f0ad4e;
     &:hover {
       background: lighten( $bg-color, 20% );
     }

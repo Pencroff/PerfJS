@@ -52,7 +52,7 @@ export class LoaderService {
         name: benchmark.name,
         source: me.getFunctionSource(benchmark.fn.toString()),
       }));
-    return result;
+    return { suite, viewData: result };
   }
   private getFunctionSource(str) {
     const firstIndex = str.indexOf('{');
