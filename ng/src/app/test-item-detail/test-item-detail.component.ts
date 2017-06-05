@@ -31,9 +31,11 @@ export class TestItemDetailComponent implements OnInit {
       me.loaderService
         .loadScript(me.guid)
         .then((data) => {
-          const {viewData, suite} = data;
-          me.data = viewData;
-          me.suite = suite;
+          if (data) {
+            const {viewData, suite} = data;
+            me.data = viewData;
+            me.suite = suite;
+          }
         });
     })
   }
