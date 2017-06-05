@@ -5,7 +5,7 @@ import Prism from 'prismjs';
 import _ from 'lodash';
 
 import { LoaderService } from '../loader.service';
-import { IViewData, IViewDataCase } from './i-view-data.interface';
+import { IViewData, IViewDataCase } from '../i-view-data.interface';
 
 @Component({
   selector: 'app-test-item-detail',

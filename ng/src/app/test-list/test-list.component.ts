@@ -14,7 +14,7 @@ import 'rxjs/add/operator/filter';
   styleUrls: ['./test-list.component.scss']
 })
 export class TestListComponent implements OnInit {
-  private dataArr: object[];
+  public dataArr: object[];
   constructor(private route: ActivatedRoute) {
     const me = this;
     me.dataArr = data;

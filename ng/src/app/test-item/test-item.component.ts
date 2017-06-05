@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ITestIndex } from '../i-test-index.interface';
 
 @Component({
   selector: 'app-test-item',
@@ -7,7 +8,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./test-item.component.scss']
 })
 export class TestItemComponent implements OnInit {
-  @Input() data: object;
+  @Input() data: ITestIndex;
 
   private guid: string;
 
