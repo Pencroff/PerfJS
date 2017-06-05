@@ -46,7 +46,7 @@ export class TestItemDetailComponent implements OnInit {
       const suite = _.find(me.suite, { id });
       if (suite) {
         caseViewData = _.find(me.data.cases, { id });
-        caseViewData.result = null;
+        caseViewData.result = '-';
         clone = suite.clone();
         const events = me.suite.events;
         _.forEach(events.start, (fn) => { clone.on('start', fn); });
@@ -113,7 +113,7 @@ export class TestItemDetailComponent implements OnInit {
     if (data) {
       result = data.result || '-';
     }
-    if ((me.progressFlag === true || me.progressFlag === id) && result === '-') {
+    if ((me.progressFlag === true && result === '-') || me.progressFlag === id) {
       result = '<span class="gauge-loader"></span>';
     }
     return result;
