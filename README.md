@@ -1,8 +1,10 @@
 # [PerfJS.info](http://perfjs.info)
 Compare performance different JavaScript approaches in your browser.
+Reimplemented with [Angualr](https://angular.io/) and [PrimeNG](https://www.primefaces.org/primeng/#/) components.
 
 ## How to write good performance test
 
+* Don't write performance test!
 * Avoid micro optimizations!
 
 ## References
