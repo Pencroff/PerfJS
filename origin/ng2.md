@@ -64,7 +64,7 @@
 * Build process
 * Create campaign could be reused as a separate app based on angular 1
 * Continue maintaining Angular 1 has pros and cons:
-    * + mature framework, but not all required solutions available from comunity (like `bion-list`)
+    * + mature framework, but not all required solutions available from comunity
     * + developers familiar with it
     * + developed logic could be reused
     * - we should always track performance
@@ -81,29 +81,4 @@
         * controllers and tempates require rethinking logic a bit, in case of small difference in component communication (120 components)
     * UI library
         * Use PrimeNG components in app with BEM and SVG icons
-
-## JHipster
-
-#### Proc
-
-* It has a lot of options for different DB
-* Proper structured tiers from DTO to API handler
-
-#### Cons
-
-* Additional dependency like `font awesome` and `bootstrap`. We are working with SVG and BEM
-* Jasmine for testing, we already have bunch of tests based on Mocha + Chai (They provide advanced API)
-* Tests location should be changed. We are keeping tests with components.
-* Translations location should be changed. We are keeping languages files with components.
-
-* Documentation for fron-end build process don't have deep details and require source code investigation
-    > Used Angular CLI with manual changes in `webpack.config` for Angular 2 project, require investigation for changing if required
-
-* Existing build process and live reloading not condigured for `https`
-
- #### Questions
-
-* What role of `swagger-ui` folder in client root folder?
-* Could we move location of angular app from `/src/main/webapp/` to something like `/web-app`
-    > In this folder will be all dependencies for front-end, no mixing with back-end, like in default folder structure
 
