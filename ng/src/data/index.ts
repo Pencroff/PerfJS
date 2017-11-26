@@ -38,4 +38,10 @@ export default [{
   description: 'Performance case for converting string to number',
   tags: ['string', 'number', 'converting', 'basic'],
   url: 'tests/string-to-number.js'
+}, {
+  id: 'C3441282-DA60-4E49-BD5D-76ACA43F92C3',
+  name: 'key gen azure table',
+  description: 'Key gen function for azure table (<a href="https://www.npmjs.com/package/winston-azure-sw" target="_blank">link</a>)',
+  tags: ['string', 'id gen'],
+  url: 'tests/key-gen-azure-table.js'
 }];
